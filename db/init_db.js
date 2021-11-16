@@ -1,5 +1,6 @@
 // code to build and initialize DB goes here
 const { client, createUser } = require("./users");
+const { createProduct } = require("./products")
 
 async function dropTables() {
   try {
@@ -33,6 +34,12 @@ async function buildTables() {
         price INTEGER,
         category TEXT NOT NULL
       );
+      CREATE TABLE sellers(
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255),
+        password VARCHAR(255),
+        description TEXT NOT NULL
+      )
     `);
 
     // build tables in correct order
@@ -65,12 +72,69 @@ async function createInitialUsers() {
   }
 }
 
+async function createInitialProducts() {
+  try {
+    console.log('Trying to create Products...');
+    const ProductOne = await createProduct({
+      name: 'cheese',
+      description: 'cheese',
+      price: '25',
+      category: 'cheese'
+    });
+    const ProductTwo = await createProduct({
+      name: 'bread',
+      description: 'bread',
+      price: '15',
+      category: 'bread'
+    });
+    const ProductThree = await createProduct({
+      name: 'human food',
+      description: 'human food',
+      price: '100000',
+      category: 'human food'
+    })
+    console.log('Success creating Product!');
+    return [ProductOne, ProductTwo, ProductThree];
+  } catch (error) {
+    console.error("Error while creating Products!");
+    throw error;
+  }
+}
+
+async function createInitialSellers() {
+  try {
+    console.log("Trying to create sellers...");
+    const userOne = await createSeller({
+      username: "Ed",
+      password: "isthebest",
+      description: "I sell great knowledge"
+    });
+    const userTwo = await createSeller({
+      username: "Tanveer",
+      password: "isthebest",
+      description: "I also sell great knowledge"
+    });
+    const userThree = await createSeller({
+      username: "Payton",
+      password: "istheworst",
+      description: "I sell bad products"
+    });
+    console.log("Success creating sellers!");
+    return [userOne, userTwo, userThree];
+  } catch (error) {
+    console.error("Error while creating sellers!");
+    throw error;
+  }
+}
+
 async function rebuildDB() {
   try {
     client.connect();
     await dropTables();
     await buildTables();
     await createInitialUsers();
+    await createInitialProducts();
+    await createInitialSellers();
   } catch (error) {
     console.log("error during rebuildDB")
     throw error;
