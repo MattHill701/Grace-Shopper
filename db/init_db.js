@@ -1,6 +1,7 @@
 // code to build and initialize DB goes here
 const { client, createUser } = require("./users");
 const { createProduct } = require("./products")
+const { createSeller } = require("./index")
 
 async function dropTables() {
   try {
@@ -8,6 +9,7 @@ async function dropTables() {
     await client.query(`
     DROP TABLE IF EXISTS users;
     DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS sellers;
     `);
 
     console.log("finished dropping tables");
