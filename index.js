@@ -1,7 +1,7 @@
 // This is the Web Server
 const express = require('express');
 const server = express();
-
+const axios = require("axios");
 // create logs for everything
 const morgan = require('morgan');
 server.use(morgan('dev'));
@@ -22,7 +22,7 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection
-const { client } = require('./db');
+const { client } = require('./db/users');
 
 // connect to the server
 const PORT = process.env.PORT || 5000;
