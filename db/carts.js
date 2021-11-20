@@ -25,7 +25,7 @@ async function attachProductsToUsers(users) {
       // attach the activities to each single routine
       user.products = productsToAdd;
     }
-    return routinesToReturn;
+    return usersToReturn;
   } catch (error) {
     throw error;
   }

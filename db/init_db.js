@@ -9,12 +9,15 @@ const {
   getAllProducts,
   attachProductsToUsers,
   addProductToUser,
+  addProductToSeller,
+  getAllSellers
 } = require("./index");
 
 async function dropTables() {
   try {
     console.log("starting to drop tables");
     await client.query(`
+    DROP TABLE IF EXISTS seller_products;
     DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS sellers;
@@ -37,7 +40,6 @@ async function buildTables() {
         username VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL
       );
-
       CREATE TABLE products(
         id SERIAL PRIMARY KEY, 
         name VARCHAR(255) UNIQUE NOT NULL,
@@ -54,8 +56,12 @@ async function buildTables() {
       CREATE TABLE cart(
         id SERIAL PRIMARY KEY,
         "userId" INTEGER REFERENCES users(id),
-        "productId" INTEGER REFERENCES products(id),
-        totalprice INTEGER
+        "productId" INTEGER REFERENCES products(id)
+      );
+      CREATE TABLE seller_products(
+        id SERIAL PRIMARY KEY,
+        "sellerId" INTEGER REFERENCES sellers(id),
+        "productId" INTEGER REFERENCES products(id)
       );
     `);
 
@@ -167,11 +173,42 @@ async function createInitialCart() {
     ];
     console.log("this is fake cart", fakeCarts);
     const realCart = await Promise.all(fakeCarts.map(addProductToUser));
-    console.log("this is real cart", realCart);
-    console.log("finished creating cart");
+    // console.log("this is real cart", realCart);
+    // console.log("finished creating cart");
     return realCart;
   } catch (error) {
     throw error;
+  }
+}
+
+async function createInitialSellerProducts(){
+  try {
+    console.log("trying to create seller products");
+    const [product1, product2, product3] = await getAllProducts();
+    // console.log("this is product 1", product1);
+    const [sellerOne, sellerTwo, sellerThree] = await getAllSellers();
+
+    const sellerProducts = [
+      {
+        userId: sellerOne.id,
+        productId: product1.id,
+      },
+      {
+        sellerId: sellerTwo.id,
+        productId: product2.id,
+      },
+      {
+        sellerId: sellerThree.id,
+        productId: product3.id,
+      },
+    ];
+    // console.log("this is fake cart", fakeCarts);
+    const allSellerProducts = await Promise.all(sellerProducts.map(addProductToSeller));
+    // console.log("this is real cart", realCart);
+    console.log("finished creating seller products");
+    return allSellerProducts;
+  } catch (error) {
+    throw error
   }
 }
 
@@ -184,6 +221,7 @@ async function rebuildDB() {
     await createInitialProducts();
     await createInitialSellers();
     await createInitialCart();
+    await createInitialSellerProducts();
   } catch (error) {
     console.log("error during rebuildDB");
     throw error;
