@@ -34,6 +34,10 @@ async function dropTables() {
 async function buildTables() {
   try {
     console.log("Starting to build tables");
+    //convert into cents on price
+    //add role onto users
+    //create order table, need to save the products ppl buy 
+    //inventory/ number of items left -- row on products
     await client.query(`
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
