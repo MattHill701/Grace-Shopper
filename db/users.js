@@ -7,7 +7,7 @@ const client = new Client(DB_URL);
 
 async function createUser(reportFields) {
   // Get all of the fields from the passed in object
-  const { username, password } = reportFields;
+  const { username, password, cart } = reportFields;
   try {
     // insert the correct fields into the reports table
     // remember to return the new row from the query
@@ -15,13 +15,14 @@ async function createUser(reportFields) {
       rows: [users],
     } = await client.query(
       `
-    INSERT INTO users(username, password)
-    VALUES ($1, $2)
+    INSERT INTO users(username, password, cart)
+    VALUES ($1, $2, $3)
     RETURNING *
     `,
-      [username, password]
+      [username, password, cart]
     );
     // return the new report
+    console.log(users)
     return users;
   } catch (error) {
     throw error;
