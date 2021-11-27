@@ -14,7 +14,8 @@ import {
   Login,
   Register,
   Home,
-  Products
+  Products,
+  Footer
 } from "./components";
 
 
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/register"><Register /></Route>
           <Route path="/products"><Products /></Route>
         </Switch>
+        <Footer />
       </div>
     </Router>
   );

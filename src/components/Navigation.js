@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import "./myStyles.css";
 
-import { getSomething } from "../api";
 
 const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
   const history = useHistory();
 
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="primary" variant="primary">
         <Container>
           <Navbar.Brand>
             <Nav.Link
+              className="Logo"
               type="submit"
               onClick={() => {
                 history.push("/Home");
@@ -23,6 +24,7 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
           </Navbar.Brand>
           <Nav>
             <Nav.Link
+              className="nav-text"
               type="submit"
               onClick={() => {
                 history.push("/Home");
@@ -32,6 +34,7 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
             </Nav.Link>
             {isLoggedIn ? null : (
               <Nav.Link
+                className="nav-text"
                 type="submit"
                 onClick={() => {
                   history.push("/Login");
@@ -42,6 +45,7 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
             )}
             {isLoggedIn ? null : (
               <Nav.Link
+                className="nav-text"
                 type="submit"
                 onClick={() => {
                   history.push("/Register");
@@ -52,6 +56,7 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
             )}
 
             <Nav.Link
+              className="nav-text"
               type="submit"
               onClick={() => {
                 history.push("/products");
@@ -62,6 +67,7 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
 
             {isLoggedIn ? (
               <Nav.Link
+                className="nav-text"
                 type="submit"
                 onClick={() => {
                   setIsLoggedIn(false);
