@@ -1,0 +1,30 @@
+.cart-box{
+    border: 3px solid black;
+    height: 100vh;
+}
+
+.Logo{
+    color: yellow;
+}
+
+.cart-items{
+   text-align: center;
+}
+
+.nav-text{
+    color: black;
+}
+
+.page-footer{
+    background-color: blue;
+    padding-top: 3em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.container-fluid{
+    position: bottom;
+    bottom: 0;
+    position: relative;
+}
