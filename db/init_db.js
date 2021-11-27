@@ -1,4 +1,5 @@
 // code to build and initialize DB goes here
+const { user } = require("pg/lib/defaults");
 const {
   createSeller,
   getUserByUsername,
@@ -32,13 +33,13 @@ async function buildTables() {
   try {
     console.log("Starting to build tables");
     //add role onto users
-    //create order table, need to save the products ppl buy 
     await client.query(`
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
-        cart INTEGER [] 
+        cart INTEGER [],
+        canSell BOOLEAN
       );
       CREATE TABLE products(
         id SERIAL PRIMARY KEY, 
@@ -162,11 +163,11 @@ async function createInitialOrders() {
   try {
     console.log("Trying to create orders...");
     const orderOne = await createOrder({
-      userId: "1",
+      userId: '1',
       products: '{1}',
     });
     const orderTwo = await createOrder({
-      userId: "2",
+      userId: '2',
       products: '{2}',
     });
     console.log("Success creating orders!");

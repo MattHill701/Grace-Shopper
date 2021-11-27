@@ -7,18 +7,31 @@ async function createOrder(reportFields) {
     try {
       // insert the correct fields into the reports table
       // remember to return the new row from the query
+
+      let string2 = '(' + products.substring(1, products.length - 1) + ')'
+      let totalPrice = 0
+
+      const {rows} = await client.query(`
+        SELECT price FROM products
+        WHERE id IN ${string2}
+      `);
+
+      rows.forEach((e)=>{
+        totalPrice = totalPrice + e.price
+      })
+
       const {
-        rows: [ rows ],
+        rows: [ order ],
       } = await client.query(`
       INSERT INTO orders(userId, products, totalPrice)
-      VALUES ($1, $2, 5)
+      VALUES ($1, $2, $3)
       RETURNING *
       `,
-      [ userId,  products ]
+      [ userId,  products, totalPrice]
       );
-      // return the new report
-      console.log(rows)
-      return rows;
+
+      console.log(order)
+      return order;
     } catch (error) {
       throw error;
     }

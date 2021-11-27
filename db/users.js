@@ -15,8 +15,8 @@ async function createUser(reportFields) {
       rows: [users],
     } = await client.query(
       `
-    INSERT INTO users(username, password, cart)
-    VALUES ($1, $2, $3)
+    INSERT INTO users(username, password, cart, canSell)
+    VALUES ($1, $2, $3, false)
     RETURNING *
     `,
       [username, password, cart]
@@ -66,7 +66,7 @@ async function getUserById(userId) {
     } = await client.query(`
       SELECT * FROM users
       WHERE id=$1
-    `);
+    `,[userId]);
     return user;
   } catch (error) {
     throw error;
