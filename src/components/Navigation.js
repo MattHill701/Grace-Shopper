@@ -9,11 +9,10 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <div>
-      <Navbar bg="primary" variant="primary">
+      <Navbar  variant="primary" >
         <Container>
           <Navbar.Brand>
             <Nav.Link
-              className="Logo"
               type="submit"
               onClick={() => {
                 history.push("/Home");
@@ -24,7 +23,6 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
           </Navbar.Brand>
           <Nav>
             <Nav.Link
-              className="nav-text"
               type="submit"
               onClick={() => {
                 history.push("/Home");
@@ -34,7 +32,6 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
             </Nav.Link>
             {isLoggedIn ? null : (
               <Nav.Link
-                className="nav-text"
                 type="submit"
                 onClick={() => {
                   history.push("/Login");
@@ -45,7 +42,6 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
             )}
             {isLoggedIn ? null : (
               <Nav.Link
-                className="nav-text"
                 type="submit"
                 onClick={() => {
                   history.push("/Register");
@@ -56,7 +52,6 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
             )}
 
             <Nav.Link
-              className="nav-text"
               type="submit"
               onClick={() => {
                 history.push("/products");
@@ -64,10 +59,8 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
             >
               Products
             </Nav.Link>
-
             {isLoggedIn ? (
               <Nav.Link
-                className="nav-text"
                 type="submit"
                 onClick={() => {
                   setIsLoggedIn(false);
