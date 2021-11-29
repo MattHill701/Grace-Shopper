@@ -17,11 +17,19 @@ import {
   Products,
   Footer,
 } from "./components";
+import { getAllProducts } from "./api" 
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState("");
   const [username, setUsername] = useState("");
   const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(async () => {
+    const data = await getAllProducts();
+    console.log("this is data",data)
+    setAllProducts(data);
+  }, []);
+
   return (
     <Router>
       <div id="App">

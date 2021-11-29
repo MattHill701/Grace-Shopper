@@ -16,9 +16,10 @@ const Products = ({allProducts, setAllProducts}) => {
               {
                 allProducts.length 
                 ?  allProducts.map((product)=>{
+                  console.log("this is products",allProducts)
                   return(
                     <div>
-                      
+                      <h1>listed Product</h1>
                     </div>
                   )
                 }): null
