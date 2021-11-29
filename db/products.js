@@ -2,19 +2,20 @@ const { client } = require("./users");
 
 async function createProduct(reportFields) {
   // Get all of the fields from the passed in object
-  const { name, description, price, category } = reportFields;
+  const { name, description, price, category, inventory } = reportFields;
   try {
     const {
       rows: [product],
     } = await client.query(
       `
-      INSERT INTO products(name, description, price, category)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO products(name, description, price, category, inventory)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING *
       `,
-      [name, description, price, category]
+      [name, description, price, category, inventory]
     );
     // return the new product
+    console.log(product)
     return product;
   } catch (error) {
     throw error;
