@@ -57,16 +57,6 @@ async function buildTables() {
         password VARCHAR(255),
         description TEXT NOT NULL
       );
-      CREATE TABLE cart(
-        id SERIAL PRIMARY KEY,
-        "userId" INTEGER REFERENCES users(id),
-        "productId" INTEGER REFERENCES products(id)
-      );
-      CREATE TABLE seller_products(
-        id SERIAL PRIMARY KEY,
-        "sellerId" INTEGER REFERENCES sellers(id),
-        "productId" INTEGER REFERENCES products(id)
-      );
     `);
 
     // build tables in correct order
