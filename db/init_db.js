@@ -1,4 +1,5 @@
 // code to build and initialize DB goes here
+const { user } = require("pg/lib/defaults");
 const {
   createSeller,
   getUserByUsername,
@@ -7,20 +8,17 @@ const {
   createUser,
   getAllUsers,
   getAllProducts,
-  attachProductsToUsers,
-  addProductToUser,
-  addProductToSeller,
-  getAllSellers
+  getAllSellers,
+  createOrder
 } = require("./index");
 
 async function dropTables() {
   try {
     console.log("starting to drop tables");
     await client.query(`
-    DROP TABLE IF EXISTS seller_products;
-    DROP TABLE IF EXISTS cart;
-    DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS sellers;
+    DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS users;
     `);
 
@@ -34,28 +32,36 @@ async function dropTables() {
 async function buildTables() {
   try {
     console.log("Starting to build tables");
-    //convert into cents on price
     //add role onto users
-    //create order table, need to save the products ppl buy 
-    //inventory/ number of items left -- row on products
     await client.query(`
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL
+        password VARCHAR(255) NOT NULL,
+        cart INTEGER [],
+        canSell BOOLEAN
       );
       CREATE TABLE products(
         id SERIAL PRIMARY KEY, 
         name VARCHAR(255) UNIQUE NOT NULL,
         description TEXT NOT NULL,
         price INTEGER,
-        category TEXT NOT NULL
+        category TEXT NOT NULL,
+        inventory INTEGER
       );
       CREATE TABLE sellers(
         id SERIAL PRIMARY KEY,
         username VARCHAR(255),
         password VARCHAR(255),
-        description TEXT NOT NULL
+        description TEXT NOT NULL,
+        products INTEGER [],
+        canSell BOOLEAN
+      );
+      CREATE TABLE orders(
+        id SERIAL PRIMARY KEY,
+        userId INTEGER,
+        products INTEGER [],
+	      totalPrice INTEGER
       );
     `);
 
@@ -72,14 +78,17 @@ async function createInitialUsers() {
     const userOne = await createUser({
       username: "amber",
       password: "51isTheKey",
+      cart: '{1,2,3}',
     });
     const userTwo = await createUser({
       username: "logan",
       password: "iLoveF4ri3s",
+      cart: '{2}',
     });
     const userThree = await createUser({
       username: "matt",
       password: "kingwasright",
+      cart: '{3}',
     });
     console.log("Success creating users!");
     return [userOne, userTwo, userThree];
@@ -95,20 +104,23 @@ async function createInitialProducts() {
     const ProductOne = await createProduct({
       name: "cheese",
       description: "cheese",
-      price: "25",
+      price: "2500",
       category: "cheese",
+      inventory: "5",
     });
     const ProductTwo = await createProduct({
       name: "bread",
       description: "bread",
-      price: "15",
+      price: "1500",
       category: "bread",
+      inventory: "6",
     });
     const ProductThree = await createProduct({
       name: "human food",
       description: "human food",
-      price: "100000",
+      price: "10000000",
       category: "human food",
+      inventory: "1",
     });
     console.log("Success creating Product!");
     return [ProductOne, ProductTwo, ProductThree];
@@ -125,16 +137,19 @@ async function createInitialSellers() {
       username: "Ed",
       password: "isthebest",
       description: "I sell great knowledge",
+      products: '{1}',
     });
     const userTwo = await createSeller({
       username: "Tanveer",
       password: "isthebest",
       description: "I also sell great knowledge",
+      products: '{2}',
     });
     const userThree = await createSeller({
       username: "Payton",
       password: "istheworst",
       description: "I sell bad products",
+      products: '{3}',
     });
     console.log("Success creating sellers!");
     return [userOne, userTwo, userThree];
@@ -144,67 +159,25 @@ async function createInitialSellers() {
   }
 }
 
-async function createInitialCart() {
+async function createInitialOrders() {
   try {
-    console.log("trying to create cart");
-    const [product1, product2, product3] = await getAllProducts();
-    console.log("this is product 1", product1);
-    const [userOne, userTwo, userThree] = await getAllUsers();
-
-    const fakeCarts = [
-      {
-        userId: userOne.id,
-        productId: product1.id,
-      },
-      {
-        userId: userTwo.id,
-        productId: product2.id,
-      },
-      {
-        userId: userThree.id,
-        productId: product3.id,
-      },
-    ];
-    console.log("this is fake cart", fakeCarts);
-    const realCart = await Promise.all(fakeCarts.map(addProductToUser));
-    // console.log("this is real cart", realCart);
-    // console.log("finished creating cart");
-    return realCart;
+    console.log("Trying to create orders...");
+    const orderOne = await createOrder({
+      userId: '1',
+      products: '{1}',
+    });
+    const orderTwo = await createOrder({
+      userId: '2',
+      products: '{2}',
+    });
+    console.log("Success creating orders!");
+    return [orderOne, orderTwo];
   } catch (error) {
+    console.error("Error while creating orders!");
     throw error;
   }
 }
 
-async function createInitialSellerProducts(){
-  try {
-    console.log("trying to create seller products");
-    const [product1, product2, product3] = await getAllProducts();
-    // console.log("this is product 1", product1);
-    const [sellerOne, sellerTwo, sellerThree] = await getAllSellers();
-
-    const sellerProducts = [
-      {
-        userId: sellerOne.id,
-        productId: product1.id,
-      },
-      {
-        sellerId: sellerTwo.id,
-        productId: product2.id,
-      },
-      {
-        sellerId: sellerThree.id,
-        productId: product3.id,
-      },
-    ];
-    // console.log("this is fake cart", fakeCarts);
-    const allSellerProducts = await Promise.all(sellerProducts.map(addProductToSeller));
-    // console.log("this is real cart", realCart);
-    console.log("finished creating seller products");
-    return allSellerProducts;
-  } catch (error) {
-    throw error
-  }
-}
 
 async function rebuildDB() {
   try {
@@ -214,8 +187,7 @@ async function rebuildDB() {
     await createInitialUsers();
     await createInitialProducts();
     await createInitialSellers();
-    await createInitialCart();
-    await createInitialSellerProducts();
+    await createInitialOrders();
   } catch (error) {
     console.log("error during rebuildDB");
     throw error;
