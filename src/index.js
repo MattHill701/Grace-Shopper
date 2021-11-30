@@ -24,10 +24,14 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [allProducts, setAllProducts] = useState([]);
 
-  useEffect(async () => {
+
+  async function fetchAllProducts(){
     const data = await getAllProducts();
     console.log("this is data",data)
     setAllProducts(data);
+  }
+  useEffect(() => {
+    fetchAllProducts()
   }, []);
 
   return (
