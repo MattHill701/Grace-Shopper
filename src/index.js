@@ -17,7 +17,7 @@ import {
   Products,
   Footer,
 } from "./components";
-import { getAllProducts } from "./api" 
+import { getAllProducts, getAllRoutines} from "./api" 
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState("");

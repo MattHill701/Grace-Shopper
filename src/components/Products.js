@@ -16,7 +16,7 @@ const Products = ({allProducts, setAllProducts}) => {
               {
                 allProducts.length 
                 ?  allProducts.map((product)=>{
-                  console.log("this is products",allProducts)
+                  console.log("this is products",product)
                   return(
                     <div>
                       <h1>listed Product</h1>
