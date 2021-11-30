@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import "./Home.css";
 
 const Home = () => {
-
   return (
-    <div>
-      <h1 className="text-center">Welcome to the Home component</h1>
-    </div>
+    <>
+      <div className="box">
+        <h1>Bring The Flavors Of The Savannah Into Your kitchen Today</h1>
+        <button className="btn">Shop Now!</button>
+      </div>
+      <div class="grid-container-element">
+        <div class="manWithTray">Grid Column 1</div>
+        <div class="grid-child-element-green">Grid Column 2</div>
+      </div>
+    </>
   );
 };
 
