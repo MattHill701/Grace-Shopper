@@ -5,6 +5,7 @@ const DB_URL =
 const client = new Client(DB_URL);
 // database methods
 
+console.log("hello")
 async function createUser(reportFields) {
   // Get all of the fields from the passed in object
   const { username, password, cart } = reportFields;
