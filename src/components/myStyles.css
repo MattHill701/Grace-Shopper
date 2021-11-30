@@ -1,23 +1,27 @@
 .cart-box{
     border: 3px solid black;
-    height: 100vh;
+    height: 80vh;
+}
+
+.navbar{
+    background-color: #E0115F;
+    color: white
+}
+
+.nav-link{
+    color: white;
 }
 
 .Logo{
-    color: yellow;
+    color: white;
 }
 
 .cart-items{
    text-align: center;
 }
 
-.nav-text{
-    color: black;
-}
-
 .page-footer{
-    background-color: blue;
-    padding-top: 3em;
+    color: white;
     position: relative;
     bottom: 0;
     width: 100%;
@@ -27,4 +31,19 @@
     position: bottom;
     bottom: 0;
     position: relative;
+}
+
+.login{
+    width: 100%;
+    margin: 50px;
+}
+
+#footer{
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/ 
+    height: 110px;
+    background: #E0115F;
 }
