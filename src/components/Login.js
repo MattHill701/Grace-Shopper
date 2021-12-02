@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Form, Button, Col, ButtonToolbar, FormGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { loginUser } from "../api";
 
-const Login = ({ isLoggedIn, setIsLoggedIn, setUsername, username }) => {
+const Login = ({ isLoggedIn, setIsLoggedIn, username, setUsername }) => {
 let history = useHistory()
 
 let [password, setPassword] = useState("");

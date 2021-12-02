@@ -6,7 +6,6 @@ import { Navbar, Nav, Container, Col, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Products = ({ allProducts, setAllProducts }) => {
-  let count = 0;
   return (
     <div>
       <Row>
@@ -16,19 +15,18 @@ const Products = ({ allProducts, setAllProducts }) => {
             <div className="products-main-container">
               {allProducts.length
                 ? allProducts.map((product) => {
-                    count + 1;
-                    console.log("this is products", product);
+                    // console.log("this is products", product);
                     return (
-                      <container className="products-container">
+                      <div className="products-container" key={`${product.id}`}>
                         <div
                           className="listed-product"
-                          key={`this is id of ${product.id}`}
+                          key={`${product.id}`}
                         >
                           <h3>{product.name}</h3>
                           <p>{product.description}</p>
                           <p> ${product.price}</p>
                         </div>
-                      </container>
+                      </div>
                     );
                   })
                 : null}
