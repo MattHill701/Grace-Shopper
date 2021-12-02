@@ -4,7 +4,7 @@
 }
 
 .navbar{
-    background-color: #E0115F;
+    background-color: #660033;
     color: white
 }
 
@@ -21,7 +21,7 @@
 }
 
 .page-footer{
-    color: white;
+    color: #660033;
     position: relative;
     bottom: 0;
     width: 100%;
@@ -45,5 +45,19 @@
     width: 100%;
     /* Height of the footer*/ 
     height: 110px;
-    background: #E0115F;
+    background: #660033;
+    color: white;
+}
+
+.products-main-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.listed-product{
+    margin-top: 15px;
+    padding: 1em;
+    border: 3px black #660033;
+    background-color: whitesmoke;
 }

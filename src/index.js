@@ -17,17 +17,21 @@ import {
   Products,
   Footer,
 } from "./components";
-import { getAllProducts } from "./api" 
+import { getAllProducts, getAllRoutines} from "./api" 
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState("");
   const [username, setUsername] = useState("");
   const [allProducts, setAllProducts] = useState([]);
 
-  useEffect(async () => {
+
+  async function fetchAllProducts(){
     const data = await getAllProducts();
     console.log("this is data",data)
     setAllProducts(data);
+  }
+  useEffect(() => {
+    fetchAllProducts()
   }, []);
 
   return (

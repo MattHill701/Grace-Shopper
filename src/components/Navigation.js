@@ -9,7 +9,7 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <div>
-      <Navbar  bg="dark" variant="dark">
+      <Navbar  variant="primary">
         <Container>
           <Navbar.Brand>
             <Nav.Link
