@@ -9,13 +9,15 @@ const {
   getAllUsers,
   getAllProducts,
   getAllSellers,
-  createOrder
+  createOrder,
+  createAdmin
 } = require("./index");
 
 async function dropTables() {
   try {
     console.log("starting to drop tables");
     await client.query(`
+    DROP TABLE IF EXISTS admin;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS sellers;
     DROP TABLE IF EXISTS products;
@@ -34,6 +36,12 @@ async function buildTables() {
     console.log("Starting to build tables");
     //add role onto users
     await client.query(`
+    CREATE TABLE admin(
+      username VARCHAR(255) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      pin INTEGER NOT NULL,
+      canDoAnything BOOLEAN
+    );
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
@@ -47,7 +55,8 @@ async function buildTables() {
         description TEXT NOT NULL,
         price INTEGER,
         category TEXT NOT NULL,
-        inventory INTEGER
+        inventory INTEGER,
+        picture TEXT NOT NULL
       );
       CREATE TABLE sellers(
         id SERIAL PRIMARY KEY,
@@ -61,7 +70,8 @@ async function buildTables() {
         id SERIAL PRIMARY KEY,
         userId INTEGER,
         products INTEGER [],
-	      totalPrice INTEGER
+	      totalPrice INTEGER,
+        isOpen BOOLEAN
       );
     `);
 
@@ -78,7 +88,7 @@ async function createInitialUsers() {
     const userOne = await createUser({
       username: "amber",
       password: "51isTheKey",
-      cart: '{1,2,3}',
+      cart: '{1}',
     });
     const userTwo = await createUser({
       username: "logan",
@@ -107,6 +117,7 @@ async function createInitialProducts() {
       price: "2500",
       category: "cheese",
       inventory: "5",
+      picture: "oof can't find",
     });
     const ProductTwo = await createProduct({
       name: "bread",
@@ -114,6 +125,7 @@ async function createInitialProducts() {
       price: "1500",
       category: "bread",
       inventory: "6",
+      picture: "oof can't find",
     });
     const ProductThree = await createProduct({
       name: "human food",
@@ -121,6 +133,7 @@ async function createInitialProducts() {
       price: "10000000",
       category: "human food",
       inventory: "1",
+      picture: "oof can't find",
     });
     console.log("Success creating Product!");
     return [ProductOne, ProductTwo, ProductThree];
@@ -165,13 +178,20 @@ async function createInitialOrders() {
     const orderOne = await createOrder({
       userId: '1',
       products: '{1}',
+      isOpen: true,
     });
     const orderTwo = await createOrder({
       userId: '2',
       products: '{2}',
+      isOpen: false,
+    });
+    const orderThree = await createOrder({
+      userId: '3',
+      products: '{3}',
+      isOpen: true,
     });
     console.log("Success creating orders!");
-    return [orderOne, orderTwo];
+    return [orderOne, orderTwo, orderThree];
   } catch (error) {
     console.error("Error while creating orders!");
     throw error;
@@ -184,6 +204,7 @@ async function rebuildDB() {
     client.connect();
     await dropTables();
     await buildTables();
+    await createAdmin();
     await createInitialUsers();
     await createInitialProducts();
     await createInitialSellers();

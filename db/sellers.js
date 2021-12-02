@@ -1,6 +1,27 @@
 
 const { client } = require("./users");
 
+async function createAdmin() {
+  // Get all of the fields from the passed in object
+  try {
+    // insert the correct fields into the reports table
+    // remember to return the new row from the query
+    const {
+      rows: [admin]
+    } = await client.query(`
+    INSERT INTO admin(username, password, pin, canDoAnything)
+    VALUES ($1,$2,$3,$4)
+    RETURNING *;
+    `,["administrator", "password", 1111, true]
+    );
+    // return the new report
+    console.log(admin)
+    return admin;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 async function createSeller(reportFields) {
     // Get all of the fields from the passed in object
@@ -40,7 +61,8 @@ async function createSeller(reportFields) {
 
   module.exports = {
       createSeller,
-      getAllSellers
+      getAllSellers,
+      createAdmin
   }
   
   
