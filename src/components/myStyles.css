@@ -48,3 +48,16 @@
     background: #660033;
     color: white;
 }
+
+.products-main-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.listed-product{
+    margin-top: 15px;
+    padding: 1em;
+    border: 3px black #660033;
+    background-color: whitesmoke;
+}
