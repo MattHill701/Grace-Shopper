@@ -61,9 +61,31 @@ async function getAllProducts() {
   }
 }
 
+async function updateProduct(id, name, description, price, category, inventory, picture) {
+  try{
+    const {rows:[that]} = await client.query(
+      `
+      UPDATE products
+      SET
+      name = $1,
+      description = $2,
+      price = $3,
+      category = $4,
+      inventory = $5,
+      picture = $6
+      WHERE id=$7;
+      `,[name, description, price, category, inventory, picture, id]
+    )
+    return that;
+  }catch (error){
+    throw error;
+  }
+}
+
 module.exports = {
   createProduct,
   getProductsByName,
   getAllProducts,
-  deleteProduct
+  deleteProduct,
+  updateProduct
 };

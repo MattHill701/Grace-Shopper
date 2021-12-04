@@ -11,7 +11,9 @@ const {
   getAllSellers,
   createOrder,
   createAdmin,
-  addProductToOrder
+  addProductToOrder,
+  closeOrder,
+  checkout
 } = require("./index");
 
 async function dropTables() {
@@ -215,7 +217,6 @@ async function rebuildDB() {
     await createInitialProducts();
     await createInitialSellers();
     await createInitialOrders();
-    await addProductToOrder('1','1');
   } catch (error) {
     console.log("error during rebuildDB");
     throw error;

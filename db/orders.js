@@ -134,10 +134,45 @@ async function createOrder(reportFields) {
     }
   }
 
+  async function closeOrder(id, string) {
+    try{
+      let arr = []
+
+      for(i=0;i<string.length;i++){
+        if(string[i] !== "," && string[i] !== "(" && string[i] !== ")"){
+        arr.push(parseInt(string[i]))
+        }
+      }
+
+      const {rows} = await client.query(`
+        SELECT * FROM products
+        WHERE id IN ${string}
+      `);
+
+      rows.forEach((e)=>{
+        let num = arr.filter((v) => (v === e.id)).length;
+        subtractInventory(e.id,(e.inventory-num))
+      })
+      const {rows:[that]} = await client.query(
+        `
+        UPDATE orders
+        SET
+        isOpen = false
+        WHERE userid=${id};
+        `
+      )
+      return that;
+    }catch (error){
+      throw error;
+    }
+  }
+
+
   module.exports = {
       createOrder,
       getAllOrders,
       getOrdersById,
       getOpenOrderById,
-      addProductToOrder
+      addProductToOrder,
+      closeOrder
   }
