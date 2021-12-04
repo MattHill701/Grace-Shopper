@@ -22,7 +22,19 @@ async function createProduct(reportFields) {
   }
 }
 // used in loop when showing all products. only owner/seller should be able to delete.
-async function deleteProduct(productId) {}
+async function deleteProduct(productId) {
+  try {
+    const {
+      rows: [products],
+    } = await client.query(`
+      DELETE FROM products
+      WHERE id=${productId};
+      `);
+    return products;
+  } catch (error) {
+    throw error;
+  }
+}
 
 async function getProductsByName(name) {
   try {
@@ -52,5 +64,6 @@ async function getAllProducts() {
 module.exports = {
   createProduct,
   getProductsByName,
-  getAllProducts
+  getAllProducts,
+  deleteProduct
 };

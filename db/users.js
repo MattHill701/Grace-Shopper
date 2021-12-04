@@ -5,6 +5,22 @@ const DB_URL =
 const client = new Client(DB_URL);
 // database methods
 
+async function updateCart(id, num) {
+  try{
+    const {rows:[that]} = await client.query(
+      `
+      UPDATE users
+      SET
+      cart = ${num}
+      WHERE id=${id};
+      `
+    )
+    return that;
+  }catch (error){
+    throw error;
+  }
+}
+
 async function createUser(reportFields) {
   // Get all of the fields from the passed in object
   const { username, password, cart } = reportFields;
@@ -79,5 +95,6 @@ module.exports = {
   createUser,
   getUserByUsername,
   getAllUsers,
-  getUserById
+  getUserById,
+  updateCart
 };

@@ -1,4 +1,4 @@
-const { client } = require("./users");
+const { client, updateCart } = require("./users");
 
 
 async function subtractInventory(id, number) {
@@ -42,7 +42,9 @@ async function createOrder(reportFields) {
 
       rows.forEach((e)=>{
         let num = arr.filter((v) => (v === e.id)).length;
+        if(!isOpen){
         subtractInventory(e.id,(e.inventory-num))
+        }
         totalPrice = totalPrice + (e.price*num)
       })
 
@@ -76,7 +78,66 @@ async function createOrder(reportFields) {
     }
   }
 
+  async function getOrdersById(id) {
+    try {
+      const { rows } = await client.query(
+        `
+        SELECT * FROM orders
+        WHERE id=${id} 
+      `
+      );
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function getOpenOrderById(id) {
+    try {
+      const { rows:[order] } = await client.query(
+        `
+        SELECT * FROM orders
+        WHERE userId=${id} AND isOpen=true
+      `
+      );
+      return order;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function addProductToOrder(id, userId) {
+    try {
+      let that = await getOpenOrderById(userId)
+      let products = JSON.stringify(that.products)
+      let string = '{' + products.substring(1, products.length - 1) + `,${id}}`
+      const {rows:[price]} = await client.query(`
+        SELECT * FROM products
+        WHERE id=$1
+      `,[id]);
+      let newPrice = price.price + that.totalprice
+      let wow = that.products.length + 1
+
+       updateCart(userId, wow)
+
+      const { rows } = await client.query(
+        `
+        UPDATE orders
+        SET products=$1,
+        totalprice=$2
+        WHERE userId=$3 AND isOpen=true
+      `,[string, newPrice, userId]
+      );
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   module.exports = {
       createOrder,
-      getAllOrders
+      getAllOrders,
+      getOrdersById,
+      getOpenOrderById,
+      addProductToOrder
   }

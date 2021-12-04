@@ -10,7 +10,8 @@ const {
   getAllProducts,
   getAllSellers,
   createOrder,
-  createAdmin
+  createAdmin,
+  addProductToOrder
 } = require("./index");
 
 async function dropTables() {
@@ -46,7 +47,7 @@ async function buildTables() {
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
-        cart INTEGER [],
+        cart INTEGER,
         canSell BOOLEAN
       );
       CREATE TABLE products(
@@ -88,17 +89,17 @@ async function createInitialUsers() {
     const userOne = await createUser({
       username: "amber",
       password: "51isTheKey",
-      cart: '{1}',
+      cart: '1',
     });
     const userTwo = await createUser({
       username: "logan",
       password: "iLoveF4ri3s",
-      cart: '{2}',
+      cart: '0',
     });
     const userThree = await createUser({
       username: "matt",
       password: "kingwasright",
-      cart: '{3}',
+      cart: '1',
     });
     console.log("Success creating users!");
     return [userOne, userTwo, userThree];
@@ -185,13 +186,18 @@ async function createInitialOrders() {
       products: '{2}',
       isOpen: false,
     });
+    const orderTwoPointFive = await createOrder({
+      userId: '2',
+      products: '{0}',
+      isOpen: true,
+    });
     const orderThree = await createOrder({
       userId: '3',
       products: '{3}',
       isOpen: true,
     });
     console.log("Success creating orders!");
-    return [orderOne, orderTwo, orderThree];
+    return [orderOne, orderTwo, orderTwoPointFive, orderThree];
   } catch (error) {
     console.error("Error while creating orders!");
     throw error;
@@ -209,6 +215,7 @@ async function rebuildDB() {
     await createInitialProducts();
     await createInitialSellers();
     await createInitialOrders();
+    await addProductToOrder('1','1');
   } catch (error) {
     console.log("error during rebuildDB");
     throw error;
