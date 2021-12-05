@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./myStyles.css";
 
 const Footer = () => <footer className="page-footer font-small blue pt-4">

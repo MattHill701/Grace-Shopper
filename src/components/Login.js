@@ -16,6 +16,7 @@ let [password, setPassword] = useState("");
           e.preventDefault();
           try {
             const { data } = await loginUser(username, password);
+            console.log(data)
             setUsername("");
             setPassword("");
             setIsLoggedIn(true);
@@ -57,7 +58,7 @@ let [password, setPassword] = useState("");
             variant="secondary"
             type="submit"
             onClick={(e) => {
-              history.push("/Register");
+              history.push("/register");
             }}
           >
             Don't have an account?

@@ -88,22 +88,22 @@ async function createInitialUsers() {
     const userOne = await createUser({
       username: "amber",
       password: "51isTheKey",
-      cart: '{1}',
+      cart: '1',
     });
     const userTwo = await createUser({
       username: "logan",
       password: "iLoveF4ri3s",
-      cart: '{2}',
+      cart: '0',
     });
     const userThree = await createUser({
       username: "matt",
       password: "kingwasright",
-      cart: '{3}',
+      cart: '1',
     });
     console.log("Success creating users!");
     return [userOne, userTwo, userThree];
   } catch (error) {
-    console.error("Error while creating reports!");
+    console.error("Error while creating users!");
     throw error;
   }
 }

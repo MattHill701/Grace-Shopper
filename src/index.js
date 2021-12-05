@@ -27,7 +27,7 @@ const App = () => {
 
   async function fetchAllProducts(){
     const data = await getAllProducts();
-    console.log("this is data",data)
+    // console.log("this is data",data)
     setAllProducts(data);
   }
   useEffect(() => {

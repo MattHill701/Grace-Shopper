@@ -5,9 +5,32 @@ const DB_URL =
 const client = new Client(DB_URL);
 // database methods
 
-async function createUser(reportFields) {
+// async function createUser(reportFields) {
+//   // Get all of the fields from the passed in object
+//   const { username, password, cart } = reportFields;
+//   try {
+//     // insert the correct fields into the reports table
+//     // remember to return the new row from the query
+//     const {
+//       rows: [users],
+//     } = await client.query(
+//       `
+//     INSERT INTO users(username, password, cart, canSell)
+//     VALUES ($1, $2, $3, false)
+//     RETURNING *
+//     `,
+//       [username, password, cart]
+//     );
+//     // return the new report
+//     console.log(users)
+//     return users;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
+async function createUser({ username, password, cart }) {
   // Get all of the fields from the passed in object
-  const { username, password, cart } = reportFields;
   try {
     // insert the correct fields into the reports table
     // remember to return the new row from the query
@@ -22,7 +45,7 @@ async function createUser(reportFields) {
       [username, password, cart]
     );
     // return the new report
-    console.log(users)
+    console.log(users);
     return users;
   } catch (error) {
     throw error;
@@ -63,10 +86,13 @@ async function getUserById(userId) {
   try {
     const {
       rows: [user],
-    } = await client.query(`
+    } = await client.query(
+      `
       SELECT * FROM users
       WHERE id=$1
-    `,[userId]);
+    `,
+      [userId]
+    );
     return user;
   } catch (error) {
     throw error;
@@ -79,5 +105,5 @@ module.exports = {
   createUser,
   getUserByUsername,
   getAllUsers,
-  getUserById
+  getUserById,
 };
