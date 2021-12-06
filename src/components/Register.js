@@ -16,7 +16,10 @@ const Register = ({ isLoggedIn, setIsLoggedIn }) => {
             e.preventDefault();
             try {
               const { data } = await registerUser(username, password);
-              setIsLoggedIn(true);
+              console.log("this is data", data)
+              storeToken(data)
+              setUsername("");
+              setPassword("");
             } catch (error) {
               console.log(error.message);
             } finally {
