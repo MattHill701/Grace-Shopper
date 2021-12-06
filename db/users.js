@@ -22,7 +22,7 @@ async function createUser({username, password}) {
       [username, password]
     );
     // return the new report
-    console.log(users)
+    // console.log(users)
     return users;
   } catch (error) {
     throw error;

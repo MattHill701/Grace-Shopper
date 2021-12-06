@@ -45,9 +45,7 @@ async function buildTables() {
       CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        cart INTEGER [],
-        canSell BOOLEAN
+        password VARCHAR(255) NOT NULL
       );
       CREATE TABLE products(
         id SERIAL PRIMARY KEY, 

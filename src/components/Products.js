@@ -17,7 +17,7 @@ const Products = ({ allProducts, setAllProducts }) => {
               {allProducts.length
                 ? allProducts.map((product) => {
                     count + 1;
-                    console.log("this is products", product);
+                    // console.log("this is products", product);
                     return (
                       <container className="products-container">
                         <div

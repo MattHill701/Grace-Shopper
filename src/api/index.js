@@ -19,9 +19,9 @@ export async function registerUser(username, password) {
         password: password
       });
 
-      console.log("THIS IS DATA",data)
+    //   console.log("THIS IS DATA",data)
       // storeToken(data.token);
-      // storeUser(data.user.username);
+    //   storeUser(data.user.username);
       return data;
     } catch (error) {
       throw error;
