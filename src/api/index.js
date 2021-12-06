@@ -3,9 +3,9 @@ import axios from "axios";
 const BASE = "http://localhost:5000/api"
 export async function getAllProducts(){
     try {
-        console.log("trying to get all products")
+        // console.log("trying to get all products")
     const { data } = await axios.get(`${BASE}/products`)
-        console.log("this is all products" , data)
+        // console.log("this is all products" , data)
         return data.products
     } catch (error) {
         throw error
@@ -13,17 +13,19 @@ export async function getAllProducts(){
 }
 
 export async function registerUser(username, password) {
+    console.log(username, password)
     try {
       const { data } = await axios.post(`http://localhost:5000/api/users/register`, {
         username: username,
         password: password
       });
 
-    //   console.log("THIS IS DATA",data)
+      console.log("THIS IS DATA",data)
       // storeToken(data.token);
     //   storeUser(data.user.username);
       return data;
     } catch (error) {
+        console.log(error)
       throw error;
     }
   } 
@@ -35,7 +37,7 @@ export async function registerUser(username, password) {
         password: password,
       });
       storeToken(data.token);
-      storeUser(data.user.username);
+    //   storeUser(data.user.username);
       return data;
     } catch (error) {
       throw error;

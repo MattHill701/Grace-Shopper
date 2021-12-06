@@ -15,11 +15,12 @@ usersRouter.get("/", async (req, res) => {
 });
 
 usersRouter.post("/register", async (req, res, next) => {
+  console.log("this is register")
   const { username, password } = req.body;
-  console.log("request to /register");
+  // console.log("request to /register");
   try {
     const _user = await getUserByUsername(username);
-
+    console.log("this is user",_user)
     if (_user) {
       next({
         name: "UserExistsError",
@@ -31,7 +32,7 @@ usersRouter.post("/register", async (req, res, next) => {
       username,
       password
     });
-
+    console.log("this is user",user)
     const token = jwt.sign(
       {
         id: user.id,

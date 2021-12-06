@@ -17,12 +17,12 @@ async function createUser({username, password}) {
       `
     INSERT INTO users(username, password)
     VALUES ($1, $2)
-    RETURNING *
+    RETURNING *;
     `,
       [username, password]
     );
     // return the new report
-    // console.log(users)
+    console.log(users)
     return users;
   } catch (error) {
     throw error;
