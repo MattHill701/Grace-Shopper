@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Form, Button, Col, ButtonToolbar } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { registerUser } from "../api";
+import { storeToken } from "../auth";
 
 const Register = ({ isLoggedIn, setIsLoggedIn }) => {
   let history = useHistory();
@@ -15,10 +17,14 @@ const Register = ({ isLoggedIn, setIsLoggedIn }) => {
           onSubmit={async (e) => {
             e.preventDefault();
             try {
-              const { data } = await registerUser(username, password);
-              setIsLoggedIn(true);
+              const results = await registerUser(username, password);
+              // console.log("this is data from registerComp" , data)
+              console.log("this is results",results)
+              storeToken(results.data.token)
+              setUsername("");
+              setPassword("");
             } catch (error) {
-              console.log(error.message);
+              throw error
             } finally {
               history.push("/Login");
             }
@@ -32,7 +38,7 @@ const Register = ({ isLoggedIn, setIsLoggedIn }) => {
               value={username}
               onChange={(event) => {
                 // console.log(event.target.value)
-                console.log(username);
+                // console.log(username);
                 setUsername(event.target.value);
               }}
             />

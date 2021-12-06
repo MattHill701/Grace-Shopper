@@ -17,9 +17,9 @@ const Products = ({ allProducts, setAllProducts }) => {
               {allProducts.length
                 ? allProducts.map((product) => {
                     count + 1;
-                    console.log("this is products", product);
+                    // console.log("this is products", product);
                     return (
-                      <container className="products-container">
+                      <div className="products-container">
                         <div
                           className="listed-product"
                           key={`this is id of ${product.id}`}
@@ -28,7 +28,7 @@ const Products = ({ allProducts, setAllProducts }) => {
                           <p>{product.description}</p>
                           <p> ${product.price}</p>
                         </div>
-                      </container>
+                      </div>
                     );
                   })
                 : null}

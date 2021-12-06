@@ -103,7 +103,7 @@ async function createInitialUsers() {
     console.log("Success creating users!");
     return [userOne, userTwo, userThree];
   } catch (error) {
-    console.error("Error while creating reports!");
+    console.error("Error while creating users");
     throw error;
   }
 }

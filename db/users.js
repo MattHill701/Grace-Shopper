@@ -3,27 +3,23 @@ const DB_NAME = "grace_shopper";
 const DB_URL =
   process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
 const client = new Client(DB_URL);
-// database methods
 
-async function createUser(reportFields) {
-  // Get all of the fields from the passed in object
-  const { username, password, cart } = reportFields;
+async function createUser({ username, password, cart, canSell }) {
+  console.log(username, password, cart, canSell);
   try {
-    // insert the correct fields into the reports table
-    // remember to return the new row from the query
     const {
-      rows: [users],
+      rows: [user],
     } = await client.query(
       `
     INSERT INTO users(username, password, cart, canSell)
-    VALUES ($1, $2, $3, false)
-    RETURNING *
+    VALUES ($1, $2, $3, $4)
+    RETURNING *;
     `,
-      [username, password, cart]
+      [username, password, cart, canSell]
     );
     // return the new report
-    console.log(users)
-    return users;
+    console.log(user);
+    return user;
   } catch (error) {
     throw error;
   }
@@ -63,10 +59,13 @@ async function getUserById(userId) {
   try {
     const {
       rows: [user],
-    } = await client.query(`
+    } = await client.query(
+      `
       SELECT * FROM users
       WHERE id=$1
-    `,[userId]);
+    `,
+      [userId]
+    );
     return user;
   } catch (error) {
     throw error;
@@ -79,5 +78,5 @@ module.exports = {
   createUser,
   getUserByUsername,
   getAllUsers,
-  getUserById
+  getUserById,
 };
