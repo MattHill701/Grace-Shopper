@@ -13,7 +13,6 @@ const {
   createAdmin,
   addProductToOrder,
   closeOrder,
-  checkout
 } = require("./index");
 
 async function dropTables() {
