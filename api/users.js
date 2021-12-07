@@ -2,6 +2,7 @@ const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+let to = []
 
 const { getAllUsers, getUserByUsername, createUser } = require("../db/users");
 
@@ -10,8 +11,9 @@ usersRouter.get("/", async (req, res) => {
   console.log("request to users");
   const users = await getAllUsers();
 
+
   res.send({
-    users,
+    users, to
   });
 });
 
@@ -35,17 +37,10 @@ usersRouter.post("/register", async (req, res, next) => {
       canSell
     });
 
-    if(!user){
-      next({
-        name: 'UserCreationError',
-        message: 'There was a problem registering you. Please try again.'
-      })
-    }
-
     const token = jwt.sign(
       {
         id: user.id,
-        username: user.username,
+        username: username,
       },
       process.env.JWT_SECRET,
       {
@@ -53,17 +48,11 @@ usersRouter.post("/register", async (req, res, next) => {
       }
     );
 
-    if(!token){
-      next({
-        name: 'TokenCreationError',
-        message: 'There was a problem registering you. Please try again.'
-      })
-    }
-
-    res.send({
-      message: "thank you for signing up",
-      token,
-    });
+    to.push({
+      username: username,
+      token: token
+    })
+    
   } catch (error) {
     next(error);
   }
