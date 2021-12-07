@@ -23,7 +23,7 @@ async function updateCart(id, num) {
 
 async function createUser(reportFields) {
   // Get all of the fields from the passed in object
-  const { username, password, cart } = reportFields;
+  const { username, password, cart, canSell } = reportFields;
   try {
     // insert the correct fields into the reports table
     // remember to return the new row from the query

@@ -1,6 +1,7 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
+const { JWT_SECRET="neverTell" } = process.env
 require("dotenv").config();
 
 const { getAllUsers, getUserByUsername, createUser } = require("../db/users");
@@ -16,8 +17,10 @@ usersRouter.get("/", async (req, res) => {
 });
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, cart, canSell } = req.body;
-
+  const { username, password } = req.body;
+  let cart = "0"
+  let canSell = false
+  console.log(username, password, cart, canSell)
   try {
     const _user = await getUserByUsername(username);
 
@@ -34,7 +37,7 @@ usersRouter.post("/register", async (req, res, next) => {
       cart,
       canSell
     });
-
+console.log("this is user", user)
     if(!user){
       next({
         name: 'UserCreationError',
@@ -42,17 +45,17 @@ usersRouter.post("/register", async (req, res, next) => {
       })
     }
 
-    const token = jwt.sign(
+    const token = await jwt.sign(
       {
         id: user.id,
         username: user.username,
       },
-      process.env.JWT_SECRET,
+        JWT_SECRET,
       {
         expiresIn: "1w",
       }
     );
-
+console.log("this is token", token)
     if(!token){
       next({
         name: 'TokenCreationError',

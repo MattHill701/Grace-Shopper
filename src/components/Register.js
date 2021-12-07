@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Form, Button, Col, ButtonToolbar } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-
+import { registerUser } from "../api"
 const Register = ({ isLoggedIn, setIsLoggedIn }) => {
   let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const cart = "0"
+  const canSell = false
   return (
     <div>
       <Col md={{ span: 4, offset: 2 }}>
@@ -15,8 +16,11 @@ const Register = ({ isLoggedIn, setIsLoggedIn }) => {
           onSubmit={async (e) => {
             e.preventDefault();
             try {
-              const { data } = await registerUser(username, password);
-              setIsLoggedIn(true);
+              const { results } = await registerUser(username, password, cart, canSell);
+              console.log("this is results", results)
+              storeToken(results)
+              setUsername("")
+              setPassword("")
             } catch (error) {
               console.log(error.message);
             } finally {
@@ -32,7 +36,6 @@ const Register = ({ isLoggedIn, setIsLoggedIn }) => {
               value={username}
               onChange={(event) => {
                 // console.log(event.target.value)
-                console.log(username);
                 setUsername(event.target.value);
               }}
             />
