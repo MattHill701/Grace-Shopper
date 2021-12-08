@@ -3,7 +3,7 @@ const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const { getAllUsers, getUserByUsername, createUser } = require("../db/users");
+const { getAllUsers, getUserByUsername, createUser, createOrder } = require("../db");
 
 // UPDATE
 usersRouter.get("/", async (req, res) => {
@@ -25,6 +25,11 @@ usersRouter.post("/register", async (req, res, next) => {
       res.send("user exists")
     } else{
     let user = await createUser({username, password, cart, canSell})
+    const order = await createOrder({
+      userId: user.id,
+      products: "{0}",
+      isOpen: true
+    });
     const token = jwt.sign(
       {
         id: user.id,
@@ -35,7 +40,7 @@ usersRouter.post("/register", async (req, res, next) => {
         expiresIn: "1w",
       }
     );
-    res.send({username, token})
+    res.send({username, order, token})
     }
   } catch (error) {
     next(error);
@@ -73,7 +78,6 @@ usersRouter.post("/login", async (req, res, next) => {
     }
 
   } catch (error) {
-    console.log(error);
     next(error);
   }
 });
