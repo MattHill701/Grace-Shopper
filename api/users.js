@@ -2,7 +2,6 @@ const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-let to = []
 
 const { getAllUsers, getUserByUsername, createUser } = require("../db/users");
 
@@ -13,7 +12,7 @@ usersRouter.get("/", async (req, res) => {
 
 
   res.send({
-    users, to
+    users, 
   });
 });
 
@@ -21,22 +20,11 @@ usersRouter.post("/register", async (req, res, next) => {
   const { username, password, cart, canSell } = req.body;
 
   try {
-    const _user = await getUserByUsername(username);
-
-    if (_user) {
-      next({
-        name: "UserExistsError",
-        message: "A user by that username already exists",
-      });
-    }
-
-    const user = await createUser({
-      username,
-      password,
-      cart,
-      canSell
-    });
-
+    let notUser = await getUserByUsername(username)
+    if(notUser !== undefined){
+      res.send("user exists")
+    } else{
+    let user = await createUser({username, password, cart, canSell})
     const token = jwt.sign(
       {
         id: user.id,
@@ -47,13 +35,45 @@ usersRouter.post("/register", async (req, res, next) => {
         expiresIn: "1w",
       }
     );
-
-    to.push({
-      username: username,
-      token: token
-    })
-    
+    res.send({username, token})
+    }
   } catch (error) {
+    next(error);
+  }
+});
+
+usersRouter.post("/login", async (req, res, next) => {
+    
+  const { username, password } = req.body;
+
+  // request must have both
+  if (!username || !password) {
+    next({
+      name: "MissingCredentialsError",
+      message: "Please supply both a username and password",
+    });
+  }
+
+  try {
+    const user = await getUserByUsername(username);
+    if(user.username === username && user.password === password){
+      const token = jwt.sign(
+        {
+          id: user.id,
+          username: username,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1w",
+        }
+      );
+      res.send({username, token})
+    } else{
+      res.send("error, whoopsie daisies!")
+    }
+
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 });
