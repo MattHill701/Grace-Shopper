@@ -47,7 +47,7 @@ async function createUser(reportFields) {
 
 async function getUserByUsername(username) {
   try {
-    const { rows } = await client.query(
+    const { rows:[user] } = await client.query(
       `
       SELECT * FROM users 
       WHERE username=$1
@@ -55,7 +55,7 @@ async function getUserByUsername(username) {
       [username]
     );
 
-    return rows;
+    return user;
   } catch (error) {
     throw error;
   }

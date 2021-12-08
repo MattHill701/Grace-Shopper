@@ -22,6 +22,24 @@ async function createAdmin() {
   }
 }
 
+async function verifyAdmin(username, password) {
+  try {
+    const { rows:[admin] } = await client.query(
+      `
+      SELECT * FROM admin
+    `
+    );
+
+    if(admin.username === username && admin.password === password){
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 async function createSeller(reportFields) {
     // Get all of the fields from the passed in object
@@ -59,10 +77,28 @@ async function createSeller(reportFields) {
     }
   }
 
+  async function getSellerByUsername(username) {
+    try {
+      const { rows:[seller] } = await client.query(
+        `
+        SELECT * FROM sellers 
+        WHERE username=$1
+      `,
+        [username]
+      );
+  
+      return seller;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   module.exports = {
       createSeller,
       getAllSellers,
-      createAdmin
+      createAdmin,
+      getSellerByUsername,
+      verifyAdmin
   }
   
   
