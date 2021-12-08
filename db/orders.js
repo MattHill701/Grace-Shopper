@@ -58,7 +58,6 @@ async function createOrder(reportFields) {
       [ userId,  products, totalPrice, isOpen]
       );
 
-      console.log(order)
       return order;
     } catch (error) {
       throw error;

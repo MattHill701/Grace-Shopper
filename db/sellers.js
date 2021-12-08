@@ -57,7 +57,6 @@ async function createSeller(reportFields) {
       [ username, password, description, products ]
       );
       // return the new report
-      console.log(sellers)
       return sellers;
     } catch (error) {
       throw error;

@@ -11,8 +11,6 @@ const {
   getAllSellers,
   createOrder,
   createAdmin,
-  addProductToOrder,
-  closeOrder,
 } = require("./index");
 
 async function dropTables() {
