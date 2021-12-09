@@ -2,7 +2,7 @@ const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
+const { JWT_SECRET = "neverTell" } = process.env;
 const { getAllUsers, getUserByUsername, createUser, createOrder } = require("../db");
 
 // UPDATE
@@ -18,28 +18,32 @@ usersRouter.get("/", async (req, res) => {
 
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, cart, canSell } = req.body;
-
+console.log("api req.body",username, password, cart, canSell)
   try {
     let notUser = await getUserByUsername(username)
     if(notUser !== undefined){
       res.send("user exists")
     } else{
     let user = await createUser({username, password, cart, canSell})
+    console.log("this is user", user)
     const order = await createOrder({
       userId: user.id,
       products: "{0}",
       isOpen: true
     });
+    
+    console.log("this is order", order)
     const token = jwt.sign(
       {
         id: user.id,
         username: username,
       },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       {
         expiresIn: "1w",
       }
     );
+    console.log("this is token",token)
     res.send({username, order, token})
     }
   } catch (error) {
@@ -72,6 +76,7 @@ usersRouter.post("/login", async (req, res, next) => {
           expiresIn: "1w",
         }
       );
+      console.log("this is token", token)
       res.send({username, token})
     } else{
       res.send("error, whoopsie daisies!")
