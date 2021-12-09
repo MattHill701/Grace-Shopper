@@ -11,6 +11,8 @@ const {
   getAllSellers,
   createOrder,
   createAdmin,
+  addProductToSeller,
+  addProductToOrder
 } = require("./index");
 
 async function dropTables() {
@@ -88,7 +90,7 @@ async function createInitialUsers() {
     const userOne = await createUser({
       username: "amber",
       password: "51isTheKey",
-      cart: '1',
+      cart: '3',
     });
     const userTwo = await createUser({
       username: "logan",
@@ -98,7 +100,7 @@ async function createInitialUsers() {
     const userThree = await createUser({
       username: "matt",
       password: "kingwasright",
-      cart: '1',
+      cart: '2',
     });
     console.log("Success creating users!");
     return [userOne, userTwo, userThree];
@@ -116,7 +118,7 @@ async function createInitialProducts() {
       description: "cheese",
       price: "2500",
       category: "cheese",
-      inventory: "5",
+      inventory: "50",
       picture: "oof can't find",
     });
     const ProductTwo = await createProduct({
@@ -124,7 +126,7 @@ async function createInitialProducts() {
       description: "bread",
       price: "1500",
       category: "bread",
-      inventory: "6",
+      inventory: "60",
       picture: "oof can't find",
     });
     const ProductThree = await createProduct({
@@ -132,7 +134,7 @@ async function createInitialProducts() {
       description: "human food",
       price: "10000000",
       category: "human food",
-      inventory: "1",
+      inventory: "10",
       picture: "oof can't find",
     });
     console.log("Success creating Product!");
@@ -177,12 +179,12 @@ async function createInitialOrders() {
     console.log("Trying to create orders...");
     const orderOne = await createOrder({
       userId: '1',
-      products: '{1}',
+      products: '{1,2,3}',
       isOpen: true,
     });
     const orderTwo = await createOrder({
       userId: '2',
-      products: '{2}',
+      products: '{2,2}',
       isOpen: false,
     });
     const orderTwoPointFive = await createOrder({
@@ -192,7 +194,7 @@ async function createInitialOrders() {
     });
     const orderThree = await createOrder({
       userId: '3',
-      products: '{3}',
+      products: '{1,3}',
       isOpen: true,
     });
     console.log("Success creating orders!");
