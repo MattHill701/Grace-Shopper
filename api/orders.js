@@ -2,7 +2,7 @@ const express = require("express");
 const ordersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 
-const { getAllOrders, createOrder, getOpenOrderById, addProductToOrder, closeOrder } = require("../db");
+const { getAllOrders, createOrder, getOpenOrderById, addProductToOrder, closeOrder, updateCart } = require("../db");
 
 ordersRouter.get("/", async (req, res) => {
   console.log("request to orders");
@@ -48,10 +48,12 @@ ordersRouter.patch("/", async (req, res, next) => {
     products: "{0}",
     isOpen: true
   });
+  const user = await updateCart(id, 0)
 
   res.send({
     order,
     order2,
+    user,
     message: "congrats you did it!"
   });
 } catch (error){
@@ -61,9 +63,9 @@ ordersRouter.patch("/", async (req, res, next) => {
 
 ordersRouter.patch("/products", async (req, res, next) => {
   console.log("request to orders");
-  const { productId, userId } = req.body
+  const { add, productId, userId } = req.body
   try{
-  const order = await addProductToOrder(productId, userId);
+  const order = await addProductToOrder(add, productId, userId);
 
   res.send({
     order,

@@ -2,7 +2,7 @@ const express = require("express");
 const productsRouter = express.Router();
 const jwt = require("jsonwebtoken");
 
-const { getAllProducts, createProduct, deleteProduct, updateProduct } = require("../db");
+const { getAllProducts, createProduct, deleteProduct, updateProduct, addProductToSeller, removeProductFromOrder, removeProductFromSeller } = require("../db");
 
 productsRouter.get("/", async (req, res) => {
   console.log("request to products");
@@ -14,11 +14,14 @@ productsRouter.get("/", async (req, res) => {
 });
 
 productsRouter.post("/", async (req, res, next) => {
+  const { sellerId, name, description, price, category, inventory, picture } = req.body
   try{
-  const product = await createProduct(req.body);
+  const product = await createProduct({ name, description, price, category, inventory, picture });
+  const seller =  await addProductToSeller(product.id, sellerId)
+  
 
   res.send({
-    product,
+    product, seller
   });
 } catch (error){
   next(error);
@@ -31,9 +34,11 @@ productsRouter.delete("/", async (req, res, next) => {
 
   try{
   const product = await deleteProduct(id);
+  const orders = await removeProductFromOrder(id)
+  const seller = await removeProductFromSeller(id)
 
   res.send({
-    product,
+    product, orders, seller
   });
 } catch (error){
   next(error);
