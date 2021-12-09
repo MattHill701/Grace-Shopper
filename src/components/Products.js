@@ -3,8 +3,11 @@ import { Button } from "react-bootstrap";
 import { Cart } from "./";
 import "./myStyles.css";
 import { Navbar, Nav, Container, Col, Row } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { addProductToOrder } from "../api";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
+import { getUser } from "../auth";
 const Products = ({ allProducts, setAllProducts }) => {
   let count = 0;
   return (
@@ -12,21 +15,33 @@ const Products = ({ allProducts, setAllProducts }) => {
       <Row>
         <Col md={9} className="mr-auto">
           <div>
-            <h1 className="text-center">List of Products</h1>
+            {/* <h1 className="text-center">List of Products</h1> */}
             <div className="products-main-container">
               {allProducts.length
                 ? allProducts.map((product) => {
-                    count + 1;
-                    console.log("this is products", product);
+                    // console.log("this is products", product);
                     return (
                       <div className="products-container" key={`${product.id}`}>
                         <div
                           className="listed-product"
-                          key={`this is id of ${product.id}`}
+                          key={`${product.id}`}
                         >
-                          <h3>{product.name}</h3>
+                          <h3>
+                            <Link
+                              to={`/products/${product.id}`}
+                              key={product.id}
+                              className="product_link"
+                            >
+                              {product.name}
+                            </Link>
+                          </h3>
                           <p>{product.description}</p>
-                          <p> ${product.price}</p>
+                          <p>${product.price}</p>
+                          <Button type="submit" onClick={(e)=>{
+                           let user = getUser()
+                           console.log("this is current userId",user.userId)
+                           addProductToOrder(product.id, user.userId)
+                          }}>+</Button>
                         </div>
                       </div>
                     );

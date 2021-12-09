@@ -71,13 +71,15 @@ usersRouter.post("/login", async (req, res, next) => {
           id: user.id,
           username: username,
         },
-        process.env.JWT_SECRET,
+        JWT_SECRET,
         {
           expiresIn: "1w",
         }
       );
+      const userId = user.id;
+      console.log(userId)
       console.log("this is token", token)
-      res.send({username, token})
+      res.send({username, userId, token})
     } else{
       res.send("error, whoopsie daisies!")
     }

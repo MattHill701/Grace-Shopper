@@ -64,7 +64,6 @@ ordersRouter.patch("/products", async (req, res, next) => {
   const { productId, userId } = req.body
   try{
   const order = await addProductToOrder(productId, userId);
-
   res.send({
     order,
     message: "congrats you did it!"

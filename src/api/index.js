@@ -40,9 +40,22 @@ export async function loginUser(username, password) {
     });
     console.log("this is data from loginUser",data)
     storeToken(data.token);
-    storeUser(data.user.username);
+    // storeUser(data.user.username);
     return data;
   } catch (error) {
     throw error;
+  }
+}
+
+export async function addProductToOrder(productId, userId){
+  try {
+    const { data } = await axios.patch(`http://localhost:5000/api/products`, {
+        productId: productId,
+        userId: userId
+    })
+    console.log("this is productorder data", data)
+    return data
+  } catch (error) {
+    throw error
   }
 }
