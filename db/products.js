@@ -15,6 +15,7 @@ async function createProduct(reportFields) {
       [name, description, price, category, inventory, picture]
     );
     // return the new product
+    console.log(product)
     return product;
   } catch (error) {
     throw error;
@@ -29,6 +30,7 @@ async function deleteProduct(productId) {
       DELETE FROM products
       WHERE id=${productId};
       `);
+      
     return products;
   } catch (error) {
     throw error;

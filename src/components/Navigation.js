@@ -40,6 +40,15 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
                 Login
               </Nav.Link>
             )}
+            {
+              !isLoggedIn ? null : (
+                <Nav.Link type="submit" onClick={()=>{
+                  history.push("/mycart")
+                }}>
+                  My Cart
+                </Nav.Link>
+              )
+            }
             {isLoggedIn ? null : (
               <Nav.Link
                 type="submit"

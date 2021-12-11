@@ -4,10 +4,10 @@ const BASE = "http://localhost:5000/api"
 import { storeToken, storeUser} from "../auth";
 export async function getAllProducts(){
     try {
-        console.log("trying to get all products")
+        // console.log("trying to get all products")
     const { data } = await axios.get(`${BASE}/products`)
     
-        console.log("this is all products" , data)
+        // console.log("this is all products" , data)
         return data.products
     } catch (error) {
         throw error
@@ -47,13 +47,27 @@ export async function loginUser(username, password) {
   }
 }
 
-export async function addProductToOrder(productId, userId){
+export async function addProductToOrder(add, productId, userId){
   try {
-    const { data } = await axios.patch(`http://localhost:5000/api/products`, {
+    const data = await axios.patch(`http://localhost:5000/api/orders/products`, {
+        add: add,
         productId: productId,
         userId: userId
     })
     console.log("this is productorder data", data)
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getOrderById(userId){
+  console.log("this is userId in api", userId)
+  try {
+    const { data } = await axios.get(`http://localhost:5000/api/orders/myOrder`, {
+      id : userId
+    })
+    console.log("this is all ordersbyId",data)
     return data
   } catch (error) {
     throw error
