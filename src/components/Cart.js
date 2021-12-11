@@ -1,18 +1,23 @@
 import { getUser } from "../auth";
 import React, { useState, useEffect } from "react";
-import { getOrderById } from "../api";
+import { finishCart, getOrderById } from "../api";
 
 const Cart = () => {
-  const [order, setOrder] = useState([]);
-  
+  // const [order, setOrder] = useState([]);
+  let order;
   let user = getUser();
   console.log("this is current user", user);
   console.log("this is userId", user.userId);
-  
+
+
+
+
   async function fetchOrderById() {
     const pinnedOrder = await getOrderById(user.userId);
-    console.log("this is order", order);
-    setOrder(pinnedOrder);
+    console.log("this is pinnedorder", pinnedOrder);
+    order = pinnedOrder;
+    let order1 = finishCart(order)
+    console.log("this is order1",order1);
   }
 
   useEffect(() => {
@@ -25,8 +30,8 @@ const Cart = () => {
     <div>
       <h1 className="text-center">Shopping Cart</h1>
       <div className="cart-items">
-        {
-         order.length
+        {order !== undefined
+          ? order.length
             ? order.map((item) => {
                 console.log("this is item", item);
                 return (
@@ -37,7 +42,7 @@ const Cart = () => {
                 );
               })
             : null
-          }
+          : null}
       </div>
     </div>
   );

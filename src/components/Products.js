@@ -54,7 +54,7 @@ const Products = ({ allProducts, setAllProducts }) => {
         </Col>
         <Col md={3} className="ml-auto">
           <div className="cart-box">
-            <Cart />
+            {/* <Cart /> */}
             <div className="cart-items">
               <p> ITEM 1: COST </p>
               <p> ITEM 1: COST </p>

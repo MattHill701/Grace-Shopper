@@ -63,11 +63,27 @@ export async function addProductToOrder(add, productId, userId){
 
 export async function getOrderById(userId){
   console.log("this is userId in api", userId)
+  console.log("4")
   try {
-    const { data } = await axios.get(`http://localhost:5000/api/orders/myOrder`, {
-      id : userId
+    const { data } = await axios.post(`http://localhost:5000/api/orders/myorder`, {
+      id: userId
     })
-    console.log("this is all ordersbyId",data)
+    console.log("this is all ordersbyId", data)
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function finishCart(order){
+//  console.log("this is order", order)
+ console.log("this is order.order.products", order.order.products)
+  try {
+
+    const { data } = await axios.post(`http://localhost:5000/api/products/myproducts`,{
+   products: order.order.products
+    })
+    console.log(data)
     return data
   } catch (error) {
     throw error

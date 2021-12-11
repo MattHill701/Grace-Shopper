@@ -226,7 +226,8 @@ async function createOrder(reportFields) {
       // insert the correct fields into the reports table
       // remember to return the new row from the query
       let arr = []
-      let string1 = products.substring(1, products.length - 1)
+      let products1 = JSON.stringify(products)
+      let string1 = products1.substring(1, products1.length - 1)
       let string2 = '(' + string1 + ')'
 
       for(i=0;i<string1.length;i++){

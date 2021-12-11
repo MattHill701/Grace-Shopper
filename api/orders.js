@@ -21,10 +21,13 @@ ordersRouter.get("/", async (req, res) => {
   });
 });
 
-ordersRouter.get("/myOrder", async (req, res) => {
+ordersRouter.post("/myorder", async (req, res) => {
   console.log("request to orders my guy");
+  console.log("this is req.body",req.body)
+  const { id } = req.body
+  console.log(id)
   try {
-    const order = await getOpenOrderById(req.body);
+    const order = await getOpenOrderById(id);
     console.log("this is order", order);
     // const cart = await checkOut(order);
     // console.log("this is cart", cart)
