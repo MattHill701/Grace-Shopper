@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { getUser } from "../auth";
 const Products = ({ allProducts, setAllProducts }) => {
 
-    console.log("this is allProducts",allProducts)
+    // console.log("this is allProducts",allProducts)
   return (
     <div>
       <Row>

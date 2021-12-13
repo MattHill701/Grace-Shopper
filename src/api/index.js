@@ -38,7 +38,7 @@ export async function loginUser(username, password) {
       username: username,
       password: password,
     });
-    console.log("this is data from loginUser",data)
+    // console.log("this is data from loginUser",data)
     storeToken(data.token);
     // storeUser(data.user.username);
     return data;
@@ -54,7 +54,7 @@ export async function addProductToOrder(add, productId, userId){
         productId: productId,
         userId: userId
     })
-    console.log("this is productorder data", data)
+    // console.log("this is productorder data", data)
     return data
   } catch (error) {
     throw error
@@ -62,13 +62,13 @@ export async function addProductToOrder(add, productId, userId){
 }
 
 export async function getOrderById(userId){
-  console.log("this is userId in api", userId)
-  console.log("4")
+  // console.log("this is userId in api", userId)
+  // console.log("4")
   try {
     const { data } = await axios.post(`http://localhost:5000/api/orders/myorder`, {
       id: userId
     })
-    console.log("this is all ordersbyId", data)
+    // console.log("this is all ordersbyId", data)
     return data
   } catch (error) {
     throw error
@@ -83,7 +83,7 @@ export async function finishCart(order){
     const { data } = await axios.post(`http://localhost:5000/api/products/myproducts`,{
    products: order.order.products
     })
-    console.log(data)
+    // console.log(data)
     return data
   } catch (error) {
     throw error
