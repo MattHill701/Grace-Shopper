@@ -1,22 +1,24 @@
 const { Client } = require("pg");
 const DB_NAME = "grace_shopper";
 const DB_URL =
-  process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
+  process.env.DATABASE_URL || `postgres://postgres@localhost:5432/${DB_NAME}`;
 const client = new Client(DB_URL);
 // database methods
 
 async function updateCart(id, num) {
-  try{
-    const {rows:[that]} = await client.query(
+  try {
+    const {
+      rows: [that],
+    } = await client.query(
       `
       UPDATE users
       SET
       cart = ${num}
       WHERE id=${id};
       `
-    )
+    );
     return that;
-  }catch (error){
+  } catch (error) {
     throw error;
   }
 }
@@ -38,7 +40,7 @@ async function createUser(reportFields) {
       [username, password, cart]
     );
     // return the new report
-    console.log(users)
+    console.log(users);
     return users;
   } catch (error) {
     throw error;
@@ -47,7 +49,9 @@ async function createUser(reportFields) {
 
 async function getUserByUsername(username) {
   try {
-    const { rows:[user] } = await client.query(
+    const {
+      rows: [user],
+    } = await client.query(
       `
       SELECT * FROM users 
       WHERE username=$1
@@ -79,10 +83,13 @@ async function getUserById(userId) {
   try {
     const {
       rows: [user],
-    } = await client.query(`
+    } = await client.query(
+      `
       SELECT * FROM users
       WHERE id=$1
-    `,[userId]);
+    `,
+      [userId]
+    );
     return user;
   } catch (error) {
     throw error;
@@ -96,5 +103,5 @@ module.exports = {
   getUserByUsername,
   getAllUsers,
   getUserById,
-  updateCart
+  updateCart,
 };
