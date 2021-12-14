@@ -65,3 +65,9 @@
 .product_link{
     color:black;
 }
+
+.cart_product{
+    color: black;
+    background-color: cornflowerblue;
+    border: 3px solid black;
+}
