@@ -1,0 +1,167 @@
+/* .box {
+  padding-top: 150px;
+  padding-right: 476px;
+  font-family: inherit;
+  text-shadow: 1px 3px 2px rgb(12, 12, 12);
+  background-repeat: no-repeat;
+  text-decoration: black;
+  font-size: 37px;
+  color: rgb(235, 238, 238);
+  text-shadow: black;
+  max-width: 100% 100%;
+  height: 630px;
+  border: 11px solid rgb(2, 2, 15);
+  background-size: 100%;
+  box-shadow: 0 10px 20px -6px #000;
+}
+
+
+.h1 {
+  text-align: center;
+  font-family: fantasy;
+  text-decoration: black;
+  font-size: 37px;
+  text-align: center;
+  color: rgb(139, 18, 18);
+  text-shadow: black;
+  max-width: 100%;
+  height: 22px;
+}
+
+.btn {
+  box-shadow: 0 10px 20px -6px #000;
+  background-color: cornsilk;
+  color: rgb(10, 9, 9);
+  margin-top: 15%;
+  margin-left: 115%;
+}
+
+.btn:hover {
+  background-color: rgb(0, 195, 255);
+  color: rgb(139, 137, 137);
+  border: 3px solid rgb(12, 10, 10);
+}
+
+.btn:active {
+  color: rgb(252, 0, 0);
+  background-color: #fefffe;
+  box-shadow: 0 1px 8px 8px rgba(255, 0, 0, 0.589);
+  transform: translateY(4px);
+}
+
+.grid-container-element {
+  display: grid;
+  padding-top: 1%;
+
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0px;
+  border: 1px solid black;
+  width: 100%;
+  height: fit-content;
+  background-color: rgb(31, 29, 29);
+}
+.grid-child-element {
+  margin: 5px;
+  border: 1px solid rgb(3, 3, 3);
+}
+
+.manWithTray {
+  background-image: url("../components/images/manholdboard.jpg");
+  padding: 80%;
+  margin-left: 3%;
+
+  background-repeat: no-repeat;
+}
+
+.grid-child-element-green {
+  background-image: url("../components/images/jagandmeat.jpg");
+  background-repeat: no-repeat;
+}
+
+This code makes the Black pantar disapear and make manWithTray become fullsrceen  
+@media only screen and (max-width: 1026px) {
+  .grid-child-element-green {
+    display: none;
+  }
+
+  .manWithTray {
+    padding-right: 114%;
+    margin-right: 3%;
+    background-position: center;
+    background-size: 100%;
+  }
+
+  .box {
+    text-align: center;
+    padding-bottom: 320px;
+  }
+
+  .btn {
+    margin-top: 200px;
+  }
+
+  .box {
+    width: 100%;
+    height: 100%;
+  }
+/* }  */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.active {
+  border: 2px solid #1db9b9;
+  transform: scale(1.3);
+  transition: all 300ms;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.slideshow {
+  position: relative;
+}
+
+.mainImg {
+  transition: all 500ms;
+}
+
+.actions {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions button {
+  background: #0000003d;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  padding-top: 10px;
+  margin: 5px;
+  border-radius: 15px;
+  padding-top: 5px;
+}
+
+.actions button:active {
+  background: #000000a2;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  padding-top: 10px;
+  margin: 5px;
+  border-radius: 15px;
+  padding-top: 5px;
+}
