@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import "../components/Home.css";
 import man from "./imgs/manholdboard.jpg";
 import bird from "./imgs/ostrichwithegg.jpg";
