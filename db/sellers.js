@@ -22,6 +22,24 @@ async function createAdmin() {
   }
 }
 
+async function verifyAdmin(username, password) {
+  try {
+    const { rows:[admin] } = await client.query(
+      `
+      SELECT * FROM admin
+    `
+    );
+
+    if(admin.username === username && admin.password === password){
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 async function createSeller(reportFields) {
     // Get all of the fields from the passed in object
@@ -59,10 +77,85 @@ async function createSeller(reportFields) {
     }
   }
 
+  async function getSellerByUsername(username) {
+    try {
+      const { rows:[seller] } = await client.query(
+        `
+        SELECT * FROM sellers 
+        WHERE username=$1
+      `,
+        [username]
+      );
+  
+      return seller;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function getSellerById(id) {
+    try {
+      const { rows:[seller] } = await client.query(
+        `
+        SELECT * FROM sellers 
+        WHERE id=$1
+      `,
+        [id]
+      );
+  
+      return seller;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function addProductToSeller(productId, sellerId) {
+
+    let that = await getSellerById(sellerId)
+    let products = JSON.stringify(that.products)
+    let string = '{' + products.substring(1, products.length - 1) + `,${productId}}`
+
+    try {
+      const { rows:[seller] } = await client.query(
+        `
+        UPDATE sellers
+        SET products=$1
+        WHERE id=$2
+      `,
+        [string, sellerId]
+      );
+  
+      return seller;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+  async function removeProductFromSeller(number) {
+    try {
+      const {
+        rows: [products],
+      } = await client.query(`
+      UPDATE sellers 
+      SET products = array_remove(products, $1)
+      RETURNING *
+        `,[number]);
+      return products;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   module.exports = {
       createSeller,
       getAllSellers,
-      createAdmin
+      createAdmin,
+      getSellerByUsername,
+      verifyAdmin,
+      getSellerById,
+      addProductToSeller,
+      removeProductFromSeller
   }
   
   

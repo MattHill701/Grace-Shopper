@@ -19,8 +19,8 @@ apiRouter.use(async (req, res, next) => {
         req.user = await getUserById(id);
         next();
       }
-    } catch ({ name, message }) {
-      next({ name, message });
+    } catch (error) {
+      next(error);
     }
   } else {
     next({
@@ -47,5 +47,8 @@ apiRouter.use("/products", productsRouter)
 
 const ordersRouter = require("./orders")
 apiRouter.use("/orders", ordersRouter)
+
+const adminRouter = require("./admin")
+apiRouter.use("/admin", adminRouter)
 
 module.exports = apiRouter;

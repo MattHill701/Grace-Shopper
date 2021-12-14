@@ -11,8 +11,8 @@ const {
   getAllSellers,
   createOrder,
   createAdmin,
-  addProductToOrder,
-  closeOrder,
+  addProductToSeller,
+  addProductToOrder
 } = require("./index");
 
 async function dropTables() {
@@ -90,7 +90,7 @@ async function createInitialUsers() {
     const userOne = await createUser({
       username: "amber",
       password: "51isTheKey",
-      cart: '1',
+      cart: '3',
     });
     const userTwo = await createUser({
       username: "logan",
@@ -100,7 +100,7 @@ async function createInitialUsers() {
     const userThree = await createUser({
       username: "matt",
       password: "kingwasright",
-      cart: '1',
+      cart: '2',
     });
     console.log("Success creating users!");
     return [userOne, userTwo, userThree];
@@ -114,31 +114,87 @@ async function createInitialProducts() {
   try {
     console.log("Trying to create Products...");
     const ProductOne = await createProduct({
-      name: "cheese",
-      description: "cheese",
-      price: "2500",
-      category: "cheese",
-      inventory: "5",
+      name: "Hog Wings",
+      description: "Smokey flavorful wings",
+      price: "14",
+      category: "exotic",
+      inventory: "50",
       picture: "oof can't find",
     });
     const ProductTwo = await createProduct({
-      name: "bread",
-      description: "bread",
-      price: "1500",
-      category: "bread",
-      inventory: "6",
+      name: "Chicken Thighs",
+      description: "Farm raised organic chicken thighs",
+      price: "11",
+      category: "FarmRaised",
+      inventory: "60",
       picture: "oof can't find",
     });
     const ProductThree = await createProduct({
+      name: "Chicken Breasts",
+      description: "The largest, juiciest chicken breasts ever",
+      price: "10000000",
+      category: "FarmRaised",
+      inventory: "70",
+      picture: "oof can't find",
+    });
+    const ProductFour = await createProduct({
+      name: "Chicken wings",
+      description: "Crispy, panko coated chicken wings",
+      price: "8",
+      category: "FarmRaised",
+      inventory: "10",
+      picture: "oof can't find",
+    });
+    const ProductFive = await createProduct({
+      name: "Sharkfin soup",
+      description: "rare shark caught off the coast of Indonesia",
+      price: "10000000",
+      category: "exotic",
+      inventory: "5",
+      picture: "oof can't find",
+    });
+    const ProductSix = await createProduct({
+      name: "Pork Bacon",
+      description: "brown sugar glazed bacon. delicious.",
+      price: "17",
+      category: "Protein",
+      inventory: "82",
+      picture: "oof can't find",
+    });
+    const ProductSeven = await createProduct({
+      name: "Babyback Ribs",
+      description: "Tossed in sweet-baby barbeque sauce",
+      price: "10000000",
+      category: "human food",
+      inventory: "10",
+      picture: "oof can't find",
+    });
+    const ProductEight = await createProduct({
       name: "human food",
       description: "human food",
       price: "10000000",
       category: "human food",
-      inventory: "1",
+      inventory: "10",
+      picture: "oof can't find",
+    });
+    const ProductNine = await createProduct({
+      name: "Rack of Lamb",
+      description: "amazing tender Lamb",
+      price: "16",
+      category: "Pain",
+      inventory: "19",
+      picture: "oof can't find",
+    });
+    const ProductTen = await createProduct({
+      name: "PetSnackz",
+      description: "del",
+      price: "16",
+      category: "pet food",
+      inventory: "12",
       picture: "oof can't find",
     });
     console.log("Success creating Product!");
-    return [ProductOne, ProductTwo, ProductThree];
+    return [ProductOne, ProductTwo, ProductThree, ProductFour, ProductFive, ProductSix, ProductSeven, ProductEight, ProductNine, ProductTen];
   } catch (error) {
     console.error("Error while creating Products!");
     throw error;
@@ -179,12 +235,12 @@ async function createInitialOrders() {
     console.log("Trying to create orders...");
     const orderOne = await createOrder({
       userId: '1',
-      products: '{1}',
+      products: '{1,2,3}',
       isOpen: true,
     });
     const orderTwo = await createOrder({
       userId: '2',
-      products: '{2}',
+      products: '{2,2}',
       isOpen: false,
     });
     const orderTwoPointFive = await createOrder({
@@ -194,7 +250,7 @@ async function createInitialOrders() {
     });
     const orderThree = await createOrder({
       userId: '3',
-      products: '{3}',
+      products: '{1,3}',
       isOpen: true,
     });
     console.log("Success creating orders!");

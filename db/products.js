@@ -30,6 +30,7 @@ async function deleteProduct(productId) {
       DELETE FROM products
       WHERE id=${productId};
       `);
+      
     return products;
   } catch (error) {
     throw error;

@@ -1,121 +1,13 @@
-import React, { useState, useEffect } from "react";
-import "../components/Home.css";
-import man from "./imgs/manholdboard.jpg";
-import bird from "./imgs/ostrichwithegg.jpg";
-import cat from "./imgs/jagandmeat.jpg";
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
 
-const IndicatorWrapper = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-`;
+const Home = () => {
 
-const Dot = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 6px;
-  background-color: white;
-  opacity: ${(props) => (props.isActive ? 1 : 0.5)};
-  margin: 5px;
-  transition: 10s all ease-in-out;
-`;
-
-const Indicator = ({ currentSlide, amountSlides, nextSlide }) => {
   return (
-    <IndicatorWrapper>
-      {Array(amountSlides)
-        .fill(1)
-        .map((_, i) => (
-          <Dot
-            key={i}
-            isActive={currentSlide === i}
-            onClick={() => nextSlide(i)}
-          />
-        ))}
-    </IndicatorWrapper>
+    <div>
+      <h1 className="text-center">Welcome to the Home component</h1>
+    </div>
   );
 };
 
-const Wrapper = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: hidden;
-  position: center;
-`;
-
-const Slide = styled.div`
-  height: 100%;
-  width: 100vw;
-  flex-shrink: 0;
-  background-position: center;
-  background-size: cover;
-  transition: 2250ms all ease-in-out;
-`;
-
-const ChildrenWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const Gradient = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-
-const ImageSlider = ({
-  images = [cat, man, bird],
-  autoPlay = true,
-  autoPlayTime = 8000,
-  children,
-  ...props
-}) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  function nextSlide(slideIndex = currentSlide + 1) {
-    const newSlideIndex = slideIndex >= images.length ? 0 : slideIndex;
-
-    setCurrentSlide(newSlideIndex);
-  }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      nextSlide();
-    }, autoPlayTime);
-
-    return () => clearTimeout(timer);
-  }, [currentSlide]);
-
-  return (
-    <Wrapper {...props}>
-      {images.map((imageUrl, index) => (
-        <Slide
-          key={index}
-          style={{
-            backgroundImage: `url(${imageUrl})`,
-            marginLeft: index === 0 ? `-${currentSlide * 100}%` : undefined,
-          }}
-        ></Slide>
-      ))}
-
-      <Indicator
-        currentSlide={currentSlide}
-        amountSlides={images.length}
-        nextSlide={nextSlide}
-      />
-      <ChildrenWrapper>{children}</ChildrenWrapper>
-    </Wrapper>
-  );
-};
-
-export default ImageSlider;
+export default Home;

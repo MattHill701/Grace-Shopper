@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Form, Button, Col, ButtonToolbar, FormGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { loginUser } from "../api";
+import { storeToken, storeUser } from "../auth";
 
-const Login = ({ isLoggedIn, setIsLoggedIn, setUsername, username }) => {
+const Login = ({ isLoggedIn, setIsLoggedIn}) => {
 let history = useHistory()
-
 let [password, setPassword] = useState("");
+let [username, setUsername] = useState("");
   return (
     <div className="Login">
       <Col md={{ span: 4, offset: 2 }} className="Login">
@@ -14,10 +16,12 @@ let [password, setPassword] = useState("");
         onSubmit={async (e) => {
           e.preventDefault();
           try {
-            const { data } = await loginUser(username, password);
+            const activeUser = await loginUser(username, password);
+            console.log("this is activeUser", activeUser)
+            storeUser(activeUser)
+            storeToken(activeUser)
             setUsername("");
             setPassword("");
-            setIsLoggedIn(true);
           } catch (error) {
             console.log(error.message);
           } finally {
