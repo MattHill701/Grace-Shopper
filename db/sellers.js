@@ -57,6 +57,7 @@ async function createSeller(reportFields) {
       [ username, password, description, products ]
       );
       // return the new report
+      console.log(sellers)
       return sellers;
     } catch (error) {
       throw error;
@@ -92,12 +93,69 @@ async function createSeller(reportFields) {
     }
   }
 
+  async function getSellerById(id) {
+    try {
+      const { rows:[seller] } = await client.query(
+        `
+        SELECT * FROM sellers 
+        WHERE id=$1
+      `,
+        [id]
+      );
+  
+      return seller;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function addProductToSeller(productId, sellerId) {
+
+    let that = await getSellerById(sellerId)
+    let products = JSON.stringify(that.products)
+    let string = '{' + products.substring(1, products.length - 1) + `,${productId}}`
+
+    try {
+      const { rows:[seller] } = await client.query(
+        `
+        UPDATE sellers
+        SET products=$1
+        WHERE id=$2
+      `,
+        [string, sellerId]
+      );
+  
+      return seller;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+  async function removeProductFromSeller(number) {
+    try {
+      const {
+        rows: [products],
+      } = await client.query(`
+      UPDATE sellers 
+      SET products = array_remove(products, $1)
+      RETURNING *
+        `,[number]);
+      return products;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   module.exports = {
       createSeller,
       getAllSellers,
       createAdmin,
       getSellerByUsername,
-      verifyAdmin
+      verifyAdmin,
+      getSellerById,
+      addProductToSeller,
+      removeProductFromSeller
   }
   
   

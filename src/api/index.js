@@ -4,10 +4,10 @@ const BASE = "http://localhost:5000/api"
 import { storeToken, storeUser} from "../auth";
 export async function getAllProducts(){
     try {
-        console.log("trying to get all products")
+        // console.log("trying to get all products")
     const { data } = await axios.get(`${BASE}/products`)
     
-        console.log("this is all products" , data)
+        // console.log("this is all products" , data)
         return data.products
     } catch (error) {
         throw error
@@ -23,7 +23,7 @@ export async function registerUser(username, password, cart, canSell) {
       cart: cart,
       canSell: canSell,
     });
-    console.log(data);
+    console.log("this is register user data",data);
     storeToken(data.token);
     //   storeUser(data.user.username);
     return data;
@@ -38,7 +38,7 @@ export async function loginUser(username, password) {
       username: username,
       password: password,
     });
-    console.log("this is data from loginUser",data)
+    // console.log("this is data from loginUser",data)
     storeToken(data.token);
     // storeUser(data.user.username);
     return data;
@@ -47,15 +47,57 @@ export async function loginUser(username, password) {
   }
 }
 
-export async function addProductToOrder(productId, userId){
+export async function addProductToOrder(add, productId, userId){
   try {
-    const { data } = await axios.patch(`http://localhost:5000/api/products`, {
+    const data = await axios.patch(`http://localhost:5000/api/orders/products`, {
+        add: add,
         productId: productId,
         userId: userId
     })
-    console.log("this is productorder data", data)
+    // console.log("this is productorder data", data)
     return data
   } catch (error) {
     throw error
+  }
+}
+
+export async function getOrderById(userId){
+  // console.log("this is userId in api", userId)
+  // console.log("4")
+  try {
+    const { data } = await axios.post(`http://localhost:5000/api/orders/myorder`, {
+      id: userId
+    })
+    console.log("this is all ordersbyId", data)
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function finishCart(order){
+//  console.log("this is order", order)
+ console.log("this is order.order.products", order.order.products)
+  try {
+
+    const { data } = await axios.post(`http://localhost:5000/api/products/myproducts`,{
+   products: order.order.products
+    })
+    console.log("this is data from finish cart",data)
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getAllOrders(){
+  try {
+      // console.log("trying to get all products")
+  const { data } = await axios.get(`${BASE}/orders`)
+  
+      console.log("this is all orders" , data)
+      return data.orders
+  } catch (error) {
+      throw error
   }
 }

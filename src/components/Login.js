@@ -22,7 +22,6 @@ let [username, setUsername] = useState("");
             storeToken(activeUser)
             setUsername("");
             setPassword("");
-            setIsLoggedIn(true);
           } catch (error) {
             console.log(error.message);
           } finally {

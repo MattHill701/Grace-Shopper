@@ -2,8 +2,8 @@ const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const { JWT_SECRET = "neverTell" } = process.env;
-const { getAllUsers, getUserByUsername, createUser, createOrder } = require("../db");
+const { JWT_SECRET="neverTell" } = process.env
+const { getAllUsers, getUserByUsername, createUser, createOrder, updateCart } = require("../db");
 
 // UPDATE
 usersRouter.get("/", async (req, res) => {
@@ -14,6 +14,20 @@ usersRouter.get("/", async (req, res) => {
   res.send({
     users, 
   });
+});
+
+usersRouter.get("/", async (req, res, next) => {
+  console.log("request to users");
+  const { id, num } = req.body
+  try{
+  const cart = await updateCart(id, num);
+
+  res.send({
+    cart, 
+  });
+} catch (error){
+  next(error)
+}
 });
 
 usersRouter.post("/register", async (req, res, next) => {
