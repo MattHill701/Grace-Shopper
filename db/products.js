@@ -15,7 +15,7 @@ async function createProduct(reportFields) {
       [name, description, price, category, inventory, picture]
     );
     // return the new product
-    console.log(product)
+    // console.log(product)
     return product;
   } catch (error) {
     throw error;

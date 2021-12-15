@@ -15,7 +15,7 @@ async function createAdmin() {
     `,["administrator", "password", 1111, true]
     );
     // return the new report
-    console.log(admin)
+    // console.log(admin)
     return admin;
   } catch (error) {
     throw error;
@@ -57,7 +57,7 @@ async function createSeller(reportFields) {
       [ username, password, description, products ]
       );
       // return the new report
-      console.log(sellers)
+      // console.log(sellers)
       return sellers;
     } catch (error) {
       throw error;

@@ -187,7 +187,7 @@ async function createInitialProducts() {
     });
     const ProductTen = await createProduct({
       name: "PetSnackz",
-      description: "del",
+      description: "amazing food for kids",
       price: "16",
       category: "pet food",
       inventory: "12",

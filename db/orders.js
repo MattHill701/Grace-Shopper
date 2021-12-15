@@ -72,7 +72,7 @@ async function createOrder(reportFields) {
       `,
       [ userId,  products, totalPrice, isOpen]
       );
-      console.log(order)
+      // console.log(order)
       return order;
     } catch (error) {
       throw error;
@@ -221,7 +221,7 @@ async function createOrder(reportFields) {
 
   async function checkOut(reportFields){
     const {products} = reportFields;
-    console.log("these are products going into checkout",products)
+    // console.log("these are products going into checkout",products)
     try {
       // insert the correct fields into the reports table
       // remember to return the new row from the query

@@ -17,7 +17,7 @@ let [username, setUsername] = useState("");
           e.preventDefault();
           try {
             const activeUser = await loginUser(username, password);
-            console.log("this is activeUser", activeUser)
+            // console.log("this is activeUser", activeUser)
             storeUser(activeUser)
             storeToken(activeUser)
             setUsername("");

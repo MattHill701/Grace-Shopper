@@ -2,15 +2,24 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Cart } from "./";
 import "./myStyles.css";
+
 import { Navbar, Nav, Container, Col, Row } from "react-bootstrap";
-import { addProductToOrder } from "../api";
+import {
+  addProductToOrder,
+  finishCart,
+  getOrderById,
+  getAllOrders,
+} from "../api";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { getUser } from "../auth";
-const Products = ({ allProducts, setAllProducts }) => {
+import CartProductPage from "./CartProductPage";
 
-    // console.log("this is allProducts",allProducts)
+const Products = ({ allProducts, setAllProducts }) => {
+  let history = useHistory()
+  // const [order, setOrder] = useState([]);
+  // console.log("this is allProducts",allProducts)
   return (
     <div>
       <Row>
@@ -23,10 +32,7 @@ const Products = ({ allProducts, setAllProducts }) => {
                     // console.log("this is products", product);
                     return (
                       <div className="products-container" key={`${product.id}`}>
-                        <div
-                          className="listed-product"
-                          key={`${product.id}`}
-                        >
+                        <div className="listed-product" key={`${product.id}`}>
                           <h3>
                             <Link
                               to={`/products/${product.id}`}
@@ -38,12 +44,19 @@ const Products = ({ allProducts, setAllProducts }) => {
                           </h3>
                           <p>{product.description}</p>
                           <p>${product.price}</p>
-                          <Button type="submit" onClick={(e)=>{
-                           let user = getUser()
-                           console.log("this is productId",product.id)
-                           console.log("this is current userId",user.userId)
-                           addProductToOrder(true , product.id, user.userId)
-                          }}>+</Button>
+                          <Button
+                            type="submit"
+                            onClick={async (e) => {
+                              let user = getUser();
+                              addProductToOrder(true, product.id, user.userId);
+                              //  const pinnedOrder = await getOrderById(user.userId)
+                              //  let processingOrder = await finishCart(pinnedOrder)
+                              //  setOrder(processingOrder.products)
+                               history.push("/products")
+                            }}
+                          >
+                            +
+                          </Button>
                         </div>
                       </div>
                     );
@@ -54,16 +67,8 @@ const Products = ({ allProducts, setAllProducts }) => {
         </Col>
         <Col md={3} className="ml-auto">
           <div className="cart-box">
-            {/* <Cart /> */}
             <div className="cart-items">
-              <p> ITEM 1: COST </p>
-              <p> ITEM 1: COST </p>
-              <p> ITEM 1: COST </p>
-              <p> ITEM 1: COST </p>
-              <p> ITEM 1: COST </p>
-              <p> ITEM 1: COST </p>
-              <p> ITEM 1: COST </p>
-              <p> TOTAL COST : </p>
+              <CartProductPage />
             </div>
           </div>
         </Col>

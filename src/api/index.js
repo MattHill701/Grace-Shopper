@@ -23,7 +23,7 @@ export async function registerUser(username, password, cart, canSell) {
       cart: cart,
       canSell: canSell,
     });
-    console.log("this is register user data",data);
+    // console.log("this is register user data",data);
     storeToken(data.token);
     //   storeUser(data.user.username);
     return data;
@@ -68,7 +68,7 @@ export async function getOrderById(userId){
     const { data } = await axios.post(`http://localhost:5000/api/orders/myorder`, {
       id: userId
     })
-    console.log("this is all ordersbyId", data)
+    // console.log("this is all ordersbyId", data)
     return data
   } catch (error) {
     throw error
@@ -83,7 +83,7 @@ export async function finishCart(order){
     const { data } = await axios.post(`http://localhost:5000/api/products/myproducts`,{
    products: order.order.products
     })
-    console.log("this is data from finish cart",data)
+    // console.log("this is data from finish cart",data)
     return data
   } catch (error) {
     throw error
@@ -95,7 +95,7 @@ export async function getAllOrders(){
       // console.log("trying to get all products")
   const { data } = await axios.get(`${BASE}/orders`)
   
-      console.log("this is all orders" , data)
+      // console.log("this is all orders" , data)
       return data.orders
   } catch (error) {
       throw error

@@ -32,7 +32,7 @@ usersRouter.get("/", async (req, res, next) => {
 
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, cart, canSell } = req.body;
-console.log("api req.body",username, password, cart, canSell)
+// console.log("api req.body",username, password, cart, canSell)
   try {
     let notUser = await getUserByUsername(username)
     if(notUser !== undefined){
@@ -91,8 +91,8 @@ usersRouter.post("/login", async (req, res, next) => {
         }
       );
       const userId = user.id;
-      console.log(userId)
-      console.log("this is token", token)
+      // console.log(userId)
+      // console.log("this is token", token)
       res.send({username, userId, token})
     } else{
       res.send("error, whoopsie daisies!")

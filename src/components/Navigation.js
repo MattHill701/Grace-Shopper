@@ -18,7 +18,7 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
                 history.push("/Home");
               }}
             >
-              Grace Shopper
+              Glorious Proteins
             </Nav.Link>
           </Navbar.Brand>
           <Nav>
@@ -59,15 +59,16 @@ const Navigation = ({ isLoggedIn, setIsLoggedIn }) => {
                 Register
               </Nav.Link>
             )}
-
-            <Nav.Link
-              type="submit"
-              onClick={() => {
-                history.push("/products");
-              }}
-            >
-              Products
-            </Nav.Link>
+          {isLoggedIn ? (
+              <Nav.Link
+                type="submit"
+                onClick={() => {
+                  history.push("/products");
+                }}
+              >
+                Products
+              </Nav.Link>
+            ) : null}
             {isLoggedIn ? (
               <Nav.Link
                 type="submit"

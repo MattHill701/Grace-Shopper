@@ -38,7 +38,7 @@ async function createUser(reportFields) {
       [username, password, cart]
     );
     // return the new report
-    console.log(users)
+    // console.log(users)
     return users;
   } catch (error) {
     throw error;

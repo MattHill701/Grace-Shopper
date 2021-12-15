@@ -18,7 +18,7 @@ const Register = ({ isLoggedIn, setIsLoggedIn }) => {
             e.preventDefault();
             try {
               const { token } = await registerUser(username, password, cart, canSell);
-              console.log("this is token",token)
+              // console.log("this is token",token)
               storeToken(token)
               setIsLoggedIn(true);
               setUsername("")
@@ -38,7 +38,7 @@ const Register = ({ isLoggedIn, setIsLoggedIn }) => {
               value={username}
               onChange={(event) => {
                 // console.log(event.target.value)
-                console.log(username);
+                // console.log(username);
                 setUsername(event.target.value);
               }}
             />

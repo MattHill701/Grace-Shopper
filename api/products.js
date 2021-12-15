@@ -63,9 +63,9 @@ productsRouter.delete("/", async (req, res, next) => {
 productsRouter.post("/myproducts", async (req, res, next) => {
   console.log("request to products/myproducts");
   try{
-    console.log("this is req.body",req.body)
+    // console.log("this is req.body",req.body)
   const products = await checkOut(req.body);
-console.log("this is products", products)
+// console.log("this is products", products)
   res.send({
     products,
   });

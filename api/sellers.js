@@ -6,7 +6,7 @@ const { getAllSellers, getSellerByUsername, createSeller } = require("../db");
 sellersRouter.get("/", async (req, res) => {
   console.log("request to sellers");
   const sellers = await getAllSellers();
-  console.log(sellers)
+  // console.log(sellers)
   res.send({
     sellers,
   });
@@ -21,7 +21,7 @@ sellersRouter.post("/register", async (req, res, next) => {
       res.send("user exists")
     } else{
     let user = await createSeller({ username, password, description, products, canSell})
-    console.log(user)
+    // console.log(user)
     const token = jwt.sign(
       {
         id: user.id,
@@ -54,7 +54,7 @@ sellersRouter.post("/login", async (req, res, next) => {
   try {
     console.log(username)
     const user = await getSellerByUsername(username);
-    console.log(user)
+    // console.log(user)
     if(user.username === username && user.password === password){
       const token = jwt.sign(
         {
