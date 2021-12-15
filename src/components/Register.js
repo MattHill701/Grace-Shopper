@@ -20,7 +20,7 @@ const Register = ({ isLoggedIn, setIsLoggedIn }) => {
               const { token } = await registerUser(username, password, cart, canSell);
               // console.log("this is token",token)
               storeToken(token)
-              setIsLoggedIn(true);
+              // setIsLoggedIn(true);
               setUsername("")
               setPassword("")
             } catch (error) {
