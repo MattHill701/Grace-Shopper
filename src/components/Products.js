@@ -49,13 +49,21 @@ const Products = ({ allProducts, setAllProducts }) => {
                             onClick={async (e) => {
                               let user = getUser();
                               addProductToOrder(true, product.id, user.userId);
-                              //  const pinnedOrder = await getOrderById(user.userId)
-                              //  let processingOrder = await finishCart(pinnedOrder)
-                              //  setOrder(processingOrder.products)
                                history.push("/products")
                             }}
                           >
                             +
+                          </Button>
+                          <Button
+                          className="productremovebutton"
+                            type="submit"
+                            onClick={async (e) => {
+                              let user = getUser();
+                              addProductToOrder(false, product.id, user.userId);
+                               history.push("/products")
+                            }}
+                          >
+                            -
                           </Button>
                         </div>
                       </div>

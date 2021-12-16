@@ -132,7 +132,7 @@ async function createInitialProducts() {
     const ProductThree = await createProduct({
       name: "Chicken Breasts",
       description: "The largest, juiciest chicken breasts ever",
-      price: "10000000",
+      price: "10",
       category: "FarmRaised",
       inventory: "70",
       picture: "oof can't find",
@@ -148,7 +148,7 @@ async function createInitialProducts() {
     const ProductFive = await createProduct({
       name: "Sharkfin soup",
       description: "rare shark caught off the coast of Indonesia",
-      price: "10000000",
+      price: "100",
       category: "exotic",
       inventory: "5",
       picture: "oof can't find",
@@ -164,7 +164,7 @@ async function createInitialProducts() {
     const ProductSeven = await createProduct({
       name: "Babyback Ribs",
       description: "Tossed in sweet-baby barbeque sauce",
-      price: "10000000",
+      price: "93",
       category: "human food",
       inventory: "10",
       picture: "oof can't find",
@@ -172,7 +172,7 @@ async function createInitialProducts() {
     const ProductEight = await createProduct({
       name: "human food",
       description: "human food",
-      price: "10000000",
+      price: "20",
       category: "human food",
       inventory: "10",
       picture: "oof can't find",

@@ -71,3 +71,22 @@
     background-color: grey;
     border: 3px solid black;
 }
+
+.checkout_button{
+    text-align: center;
+}
+
+.productcartbutton{
+    display: flex;
+    flex-direction: row;
+    background-color: #660033;
+}
+
+
+.productremovebutton{
+    background-color: #660033;
+}
+
+.pricetotal{
+    text-align: center;
+}

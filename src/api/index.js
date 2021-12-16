@@ -101,3 +101,21 @@ export async function getAllOrders(){
       throw error
   }
 }
+
+export async function checkOut(id, arr){
+  try {
+    let string1 = JSON.stringify(arr)
+    let string = '(' + string1.substring(1, string1.length - 1) + ')'
+      // console.log("trying to get all products")
+  const { data } = await axios.post(`${BASE}/orders`,{
+    id: id,
+    string: string
+     })
+  
+      // console.log("this is all orders" , data)
+      return data.orders
+  } catch (error) {
+      throw error
+  }
+}
+
