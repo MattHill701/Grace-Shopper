@@ -17,7 +17,7 @@ export async function getAllProducts(){
 export async function registerUser(username, password, cart, canSell) {
   // console.log("this is whats passed in",username, password, cart, canSell);
   try {
-    const { data } = await axios.post(`http://localhost:5000/api/users/register`, {
+    const { data } = await axios.post(`https://zaxbys-1234.herokuapp.com/api/users/register`, {
       username: username,
       password: password,
       cart: cart,
@@ -34,7 +34,7 @@ export async function registerUser(username, password, cart, canSell) {
 
 export async function loginUser(username, password) {
   try {
-    const { data } = await axios.post(`http://localhost:5000/api/users/login`, {
+    const { data } = await axios.post(`https://zaxbys-1234.herokuapp.com/api/users/login`, {
       username: username,
       password: password,
     });
@@ -49,7 +49,7 @@ export async function loginUser(username, password) {
 
 export async function addProductToOrder(add, productId, userId){
   try {
-    const data = await axios.patch(`http://localhost:5000/api/orders/products`, {
+    const data = await axios.patch(`https://zaxbys-1234.herokuapp.com/api/orders/products`, {
         add: add,
         productId: productId,
         userId: userId
@@ -65,7 +65,7 @@ export async function getOrderById(userId){
   // console.log("this is userId in api", userId)
   // console.log("4")
   try {
-    const { data } = await axios.post(`http://localhost:5000/api/orders/myorder`, {
+    const { data } = await axios.post(`https://zaxbys-1234.herokuapp.com/api/orders/myorder`, {
       id: userId
     })
     // console.log("this is all ordersbyId", data)
@@ -80,7 +80,7 @@ export async function finishCart(order){
 //  console.log("this is order.order.products", order.order.products)
   try {
 
-    const { data } = await axios.post(`http://localhost:5000/api/products/myproducts`,{
+    const { data } = await axios.post(`https://zaxbys-1234.herokuapp.com/api/products/myproducts`,{
    products: order.order.products
     })
     // console.log("this is data from finish cart",data)
