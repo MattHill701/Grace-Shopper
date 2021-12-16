@@ -15,7 +15,7 @@ export async function getAllProducts(){
 }
 
 export async function registerUser(username, password, cart, canSell) {
-  console.log("this is whats passed in",username, password, cart, canSell);
+  // console.log("this is whats passed in",username, password, cart, canSell);
   try {
     const { data } = await axios.post(`http://localhost:5000/api/users/register`, {
       username: username,
@@ -77,7 +77,7 @@ export async function getOrderById(userId){
 
 export async function finishCart(order){
 //  console.log("this is order", order)
- console.log("this is order.order.products", order.order.products)
+//  console.log("this is order.order.products", order.order.products)
   try {
 
     const { data } = await axios.post(`http://localhost:5000/api/products/myproducts`,{
@@ -107,7 +107,7 @@ export async function checkOut(id, arr){
     let string1 = JSON.stringify(arr)
     let string = '(' + string1.substring(1, string1.length - 1) + ')'
       // console.log("trying to get all products")
-  const { data } = await axios.post(`${BASE}/orders`,{
+  const { data } = await axios.patch(`${BASE}/orders`,{
     id: id,
     string: string
      })

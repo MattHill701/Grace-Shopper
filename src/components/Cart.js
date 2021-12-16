@@ -7,7 +7,7 @@ import "./myStyles.css";
 const Cart = () => {
   const [order, setOrder] = useState([]);
   const [price, setPrice] = useState(0);
-
+  const [products, setProducts] = useState([]);
   let user = getUser();
   // console.log("this is userId", user.userId);
   // console.log("this is order", order)
@@ -15,13 +15,10 @@ const Cart = () => {
   async function fetchOrderById() {
     const pinnedOrder = await getOrderById(user.userId);
     setPrice(pinnedOrder.order.totalprice);
-    console.log("totalprice", pinnedOrder.order.totalprice)
-    console.log("this is pinned order", pinnedOrder);
-    console.log("this is price", price)
+    setProducts(pinnedOrder.order.products);
+    // console.log("these are products", products)
     let order1 = await finishCart(pinnedOrder);
-    // console.log("this is order1", order1);
     setOrder(order1.products);
-    // console.log("this is orders", order);
   }
 
   useEffect(() => {
@@ -33,21 +30,30 @@ const Cart = () => {
       {/* {console.log("this is order", order)} */}
       {/* {console.log("this is order.products", order.products)} */}
 
-      <h1 className="text-center">Shopping Cart</h1>
+      <h2 className="text-center">Shopping Cart</h2>
       <div className="cart-items">
         {order.map((item) => {
           // console.log("this is item", item);
+
           return (
             <div className="cart_product" key={`${item.id}`}>
-              <h2>{item.name}</h2>
-              <h3>${item.price}</h3>
+              <h4>{item.name}</h4>
+              <h5>${item.price}</h5>
               <h6>{item.description}</h6>
+              <h6>x {products.filter((x) => x === item.id).length}</h6>
             </div>
           );
         })}
       </div>
       <div className="checkout_button">
-        <Button type="submit" onClick={() => {}}>
+        <Button
+          type="submit"
+          onClick={(e) => {
+            // console.log("this is userID", user.userId)
+            // console.log("this is products", products)
+            checkOut(user.userId, products);
+          }}
+        >
           Checkout
         </Button>
       </div>
