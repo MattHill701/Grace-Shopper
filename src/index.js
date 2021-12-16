@@ -53,13 +53,13 @@ const App = () => {
             />
           </Route>
           <Route path="/register">
-            <Register 
-              isLoggedIn={isLoggedIn} 
-              setIsLoggedIn={setIsLoggedIn} 
-              />
+            <Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
           </Route>
           <Route path="/products">
-            <Products allProducts={allProducts} setAllProducts={setAllProducts}/>
+            <Products
+              allProducts={allProducts}
+              setAllProducts={setAllProducts}
+            />
           </Route>
           <Route path="/mycart">
             <Cart />

@@ -1,78 +1,79 @@
-.cart-box{
+.cart-box {
     border: 3px solid black;
     height: 90vh;
-}
-
-.navbar{
+  }
+  
+  .navbar {
     background-color: #660033;
-    color: white
-}
-
-.nav-link{
     color: white;
-}
-
-.Logo{
+  }
+  
+  .nav-link {
     color: white;
-}
-
-.cart-items{
-   text-align: center;
-}
-
-.page-footer{
-    color: #660033;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.container-fluid{
+  }
+  
+  .Logo {
+    color: white;
+  }
+  
+  .cart-items {
+    text-align: center;
+  }
+  
+  .container-fluid {
     position: bottom;
     bottom: 0;
     position: relative;
-}
-
-.login{
+  }
+  
+  .login {
     width: 100%;
     margin: 50px;
-}
-
-#footer{
+  }
+  
+  /* The Footer-------------------------------- */
+  #footer {
     position: fixed;
     padding: 10px 10px 0px 10px;
     bottom: 0;
     width: 100%;
-    /* Height of the footer*/ 
-    height: 90px;
+    /* Height of the footer*/
+    height: 70px;
     background: #660033;
     color: white;
-}
-
-.products-main-container{
+  }
+  .page-footer {
+    color: #660033;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* products------------------------------------- */
+  .products-main-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-}
-
-.listed-product{
+  }
+  
+  .listed-product {
     margin-top: 15px;
     padding: 1em;
     border: 3px black #660033;
     background-color: whitesmoke;
-}
-
-.product_link{
-    color:black;
-}
-
-.cart_product{
+  }
+  
+  .product_link {
     color: black;
-    background-color: grey;
+  }
+  
+  .cart_product {
+    color: black;
+    background-color: cornflowerblue;
     border: 3px solid black;
-}
+  }
 
-.checkout_button{
+  .checkout_button{
     text-align: center;
 }
 
@@ -90,3 +91,45 @@
 .pricetotal{
     text-align: center;
 }
+  
+  /* homeBack---------------------------------- */
+  .thisLink {
+    background-color: #660033;
+    color: aliceblue;
+  }
+  
+  .thisIsButton {
+    margin-bottom: 75px;
+  
+    background-color: #660033;
+  }
+  
+  .thisIsButton:hover {
+    background-color: rgb(255, 0, 0);
+    color: black;
+    border: 3px solid rgb(255, 0, 0);
+  }
+  
+  .heading {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    color: antiquewhite;
+    font-size: 57px;
+    text-align: center;
+    text-shadow: #fc0 1px 0 10px;
+  }
+  
+  .headingTwo {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    color: rgb(252, 250, 248);
+    font-size: 57px;
+    text-align: center;
+    text-shadow: #fc0 1px 0 10px;
+  }
+  
+  .headingThree {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    color: rgb(10, 10, 10);
+    font-size: 57px;
+    text-align: center;
+    text-shadow: #fc0 1px 0 10px;
+  }

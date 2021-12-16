@@ -3,11 +3,12 @@ import { Form, Button, Col, ButtonToolbar, FormGroup } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { loginUser } from "../api";
 import { storeToken, storeUser } from "../auth";
+import "./myStyles.css";
 
-const Login = ({ isLoggedIn, setIsLoggedIn}) => {
-let history = useHistory()
-let [password, setPassword] = useState("");
-let [username, setUsername] = useState("");
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+  let history = useHistory();
+  let [password, setPassword] = useState("");
+  let [username, setUsername] = useState("");
   return (
     <div className="Login">
       <Col md={{ span: 4, offset: 2 }} className="Login">

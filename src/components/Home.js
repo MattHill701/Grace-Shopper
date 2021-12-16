@@ -1,20 +1,21 @@
-import "../components/Home.css";
-import man from "./imgs/manholdboard.jpg";
-import bird from "./imgs/ostrichwithegg.jpg";
-import cat from "./imgs/jagandmeat.jpg";
 import React, { useState, useEffect } from "react";
+import man from "./imgs/manholdboard.jpg";
+import meat from "./imgs/meatTable.jpg";
+import homeOne from "./imgs/jagandmeat.jpg";
 import styled from "styled-components";
+import { Button } from "react-bootstrap";
+import "./myStyles.css";
 
 const IndicatorWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   position: absolute;
-  bottom: 15px;
+  bottom: 58px;
   right: 15px;
 `;
 
 const Dot = styled.div`
-  width: 12px;
+  width: 28px;
   height: 12px;
   border-radius: 6px;
   background-color: white;
@@ -42,6 +43,7 @@ const Indicator = ({ currentSlide, amountSlides, nextSlide }) => {
 const Wrapper = styled.div`
   height: 100vh;
   display: flex;
+
   flex-wrap: nowrap;
   overflow-x: hidden;
   position: center;
@@ -49,31 +51,24 @@ const Wrapper = styled.div`
 
 const Slide = styled.div`
   height: 100%;
-  width: 100vw;
+  width: 100%;
   flex-shrink: 0;
+  padding: 18%;
   background-position: center;
   background-size: cover;
+
   transition: 2250ms all ease-in-out;
 `;
 
 const ChildrenWrapper = styled.div`
-  position: absolute;
+  position: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
 
-const Gradient = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-
 const ImageSlider = ({
-  images = [cat, man, bird],
+  images = [homeOne, man, meat],
   autoPlay = true,
   autoPlayTime = 8000,
   children,
@@ -102,9 +97,52 @@ const ImageSlider = ({
           key={index}
           style={{
             backgroundImage: `url(${imageUrl})`,
+
             marginLeft: index === 0 ? `-${currentSlide * 100}%` : undefined,
           }}
-        ></Slide>
+        >
+          {index === 2 ? (
+            <h1 className="headingThree">
+              Join Us And Start Receiving The #1 Best Tasting Meats In The USA!
+            </h1>
+          ) : null}
+
+          {index === 2 ? (
+            <Button className="thisIsButton ">
+              <a className="thisLink" href="Login">
+                Create Account
+              </a>
+            </Button>
+          ) : null}
+
+          {index === 1 ? (
+            <Button className="thisIsButton ">
+              <a className="thisLink" href="Login">
+                My Account
+              </a>
+            </Button>
+          ) : null}
+
+          {index === 1 ? (
+            <h1 className="headingTwo">
+              Or If Your Returning Thanks For Coming Back To Visit Us!
+            </h1>
+          ) : null}
+
+          {index === 0 ? (
+            <h1 className="heading">
+              Bring The Taste of the Savannah Into Your Home Today
+            </h1>
+          ) : null}
+
+          {index === 0 ? (
+            <Button className="thisIsButton">
+              <a className="thisLink" href="Login">
+                Shop Now!
+              </a>
+            </Button>
+          ) : null}
+        </Slide>
       ))}
 
       <Indicator

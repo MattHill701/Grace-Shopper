@@ -57,7 +57,7 @@ export async function addProductToOrder(add, productId, userId){
     // console.log("this is productorder data", data)
     return data
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
