@@ -1,6 +1,6 @@
 import axios from "axios";
 // const BASE = "https://floating-depths-70534.herokuapp.com/api"
-const BASE = "http://localhost:5000/api"
+const BASE = "https://zaxbys-1234.herokuapp.com/api"
 import { storeToken, storeUser} from "../auth";
 export async function getAllProducts(){
     try {
