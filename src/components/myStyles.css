@@ -1,6 +1,6 @@
 .cart-box {
     border: 3px solid black;
-    height: 90vh;
+    height: 140vh;
   }
   
   .navbar {
@@ -133,3 +133,7 @@
     text-align: center;
     text-shadow: #fc0 1px 0 10px;
   }
+
+.product_pic{
+ width: 50%;
+}
